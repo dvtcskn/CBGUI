@@ -16,6 +16,6 @@ See Samples/Sample1
 
 ## License
 CBGUI is licensed under MIT license. See [LICENSE](LICENSE)
-For third-party licenses see [ThirdPartyLicenses.txt](ThirdPartyLicenses.txt)
+For third-party licenses see [ThirdParty/ThirdPartyLicenses.txt](ThirdPartyLicenses.txt)
 
 ## How to build
