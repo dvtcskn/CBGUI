@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32328.378
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CBGUI", "CBGUI.vcxproj", "{080666F5-9360-4387-9CB7-CE775159F77A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{581575E9-215E-4C3A-A947-3DB2F2F04DEC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sample1", "Samples\Sample1\Sample1.vcxproj", "{81DD28FA-0AAB-45BC-8750-9C573F4B9A65}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{080666F5-9360-4387-9CB7-CE775159F77A}.Debug|x64.ActiveCfg = Debug|x64
+		{080666F5-9360-4387-9CB7-CE775159F77A}.Debug|x64.Build.0 = Debug|x64
+		{080666F5-9360-4387-9CB7-CE775159F77A}.Release|x64.ActiveCfg = Release|x64
+		{080666F5-9360-4387-9CB7-CE775159F77A}.Release|x64.Build.0 = Release|x64
+		{81DD28FA-0AAB-45BC-8750-9C573F4B9A65}.Debug|x64.ActiveCfg = Debug|x64
+		{81DD28FA-0AAB-45BC-8750-9C573F4B9A65}.Debug|x64.Build.0 = Debug|x64
+		{81DD28FA-0AAB-45BC-8750-9C573F4B9A65}.Release|x64.ActiveCfg = Release|x64
+		{81DD28FA-0AAB-45BC-8750-9C573F4B9A65}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{81DD28FA-0AAB-45BC-8750-9C573F4B9A65} = {581575E9-215E-4C3A-A947-3DB2F2F04DEC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5A4874D6-069B-4EF6-A561-36616680CD11}
+	EndGlobalSection
+EndGlobal

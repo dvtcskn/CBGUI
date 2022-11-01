@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Public">
+      <UniqueIdentifier>{417fc844-fe63-42e8-8da3-3314103c0085}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private">
+      <UniqueIdentifier>{86c2d2cf-ffd2-4154-9171-c4a92a3ab9ce}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\cbBorder.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbButton.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbCanvas.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbCheckBox.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbClassBody.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbComponent.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbSizeBox.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbFont.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbGeometry.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbgui.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbHorizontalBox.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbImage.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbInput.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbMath.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbOverlay.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbScrollBox.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbSlider.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbSlottedBox.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbStates.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbText.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbTransform.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbVertexColorStyle.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbVerticalBox.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cbWidget.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="src\framework.h">
+      <Filter>Private</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pch.h">
+      <Filter>Private</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\cbBorder.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cbButton.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cbCheckBox.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cbSizeBox.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cbFont.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cbGeometry.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cbHorizontalBox.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cbImage.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cbOverlay.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cbScrollBox.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cbSlider.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cbSlottedBox.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cbText.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cbTransform.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cbVerticalBox.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cbWidget.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pch.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
