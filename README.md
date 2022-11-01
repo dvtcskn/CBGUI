@@ -12,7 +12,7 @@ CBGUI is a free and open source canvas-based graphical user interface framework 
 
 ## Example
 See Samples/Sample1
-<Image>
+![Main_menu](https://user-images.githubusercontent.com/117200113/199342945-a33c2f13-f945-423c-b329-4abc9f21b4ec.jpg)
 
 ## License
 CBGUI is licensed under MIT license. See [LICENSE](LICENSE)
