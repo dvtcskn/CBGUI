@@ -15,7 +15,7 @@ See Samples/Sample1
 <Image>
 
 ## License
-CBGUI is licensed under MIT license. See [LICENSE.txt](LICENSE.txt)
+CBGUI is licensed under MIT license. See [LICENSE](LICENSE)
 For third-party licenses see [ThirdPartyLicenses.txt](ThirdPartyLicenses.txt)
 
 ## How to build
