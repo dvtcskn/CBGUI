@@ -22,5 +22,5 @@ For third-party licenses see [ThirdPartyLicenses.txt](ThirdParty/ThirdPartyLicen
 1. Install latest Visual Studio
 2. Get latest Freetype2 (http://freetype.org/download.html)
 3. Place the Freetype library in the file named "ThirdParty".
-	("CBGUI\ThirdParty\freetype2\include")
-4. Open the solution(CBGUI.sln) then build it.
+4. Change the freetype library filename to "freetype2".	("CBGUI\ThirdParty\freetype2\include")
+5. Open the solution(CBGUI.sln) then build it.
