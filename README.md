@@ -19,3 +19,8 @@ CBGUI is licensed under MIT license. See [LICENSE](LICENSE)
 For third-party licenses see [ThirdPartyLicenses.txt](ThirdParty/ThirdPartyLicenses.txt)
 
 ## How to build
+1. Install latest Visual Studio
+2. Get latest Freetype2 (http://freetype.org/download.html)
+3. Place the Freetype library in the file named "ThirdParty".
+	"CBGUI\ThirdParty\freetype2\include"
+4. Open the solution(CBGUI.sln) then build it.
