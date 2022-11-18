@@ -5544,6 +5544,9 @@ DemoCanvas::DemoCanvas(WindowsPlatform* WPlatformOwner)
 DemoCanvas::~DemoCanvas()
 {
 	StartScreen = nullptr;
+	PopupMenu = nullptr;
+	MainMenu = nullptr;
+	Focus = nullptr;
 }
 
 void DemoCanvas::ResizeWindow(std::size_t Width, std::size_t Height)

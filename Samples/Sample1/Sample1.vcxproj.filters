@@ -1,0 +1,271 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="dx11">
+      <UniqueIdentifier>{ab221fc1-1f60-4a7a-8207-f7db4eeb1cd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PCH">
+      <UniqueIdentifier>{732d7d83-43c2-49ae-adf7-de23d74691c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dx12">
+      <UniqueIdentifier>{3964d827-607c-4ea9-8e53-aa6e8492d2dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demo">
+      <UniqueIdentifier>{540baa82-de27-49c9-bbee-5c69e4126aba}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="dx11\D3D11Buffer.h">
+      <Filter>dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="dx11\D3D11CommandBuffer.h">
+      <Filter>dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="dx11\D3D11Factory.h">
+      <Filter>dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="dx11\D3D11FrameBuffer.h">
+      <Filter>dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="dx11\D3D11Pipeline.h">
+      <Filter>dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="dx11\D3D11Shader.h">
+      <Filter>dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="dx11\D3D11ShaderStates.h">
+      <Filter>dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="dx11\D3D11Texture.h">
+      <Filter>dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="dx11\D3D11Viewport.h">
+      <Filter>dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="dx11\WindowsD3D11Device.h">
+      <Filter>dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="ICanvas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StepTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cbEnumComboBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer_DX11.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cbTextBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowsApplication.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowsPlatform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UIMaterialStyle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dx12\D3D12Buffer.h">
+      <Filter>dx12</Filter>
+    </ClInclude>
+    <ClInclude Include="dx12\D3D12CommandBuffer.h">
+      <Filter>dx12</Filter>
+    </ClInclude>
+    <ClInclude Include="dx12\D3D12DeviceLocator.h">
+      <Filter>dx12</Filter>
+    </ClInclude>
+    <ClInclude Include="dx12\D3D12FrameBuffer.h">
+      <Filter>dx12</Filter>
+    </ClInclude>
+    <ClInclude Include="dx12\D3D12Pipeline.h">
+      <Filter>dx12</Filter>
+    </ClInclude>
+    <ClInclude Include="dx12\D3D12Shader.h">
+      <Filter>dx12</Filter>
+    </ClInclude>
+    <ClInclude Include="dx12\D3D12ShaderStates.h">
+      <Filter>dx12</Filter>
+    </ClInclude>
+    <ClInclude Include="dx12\D3D12Texture.h">
+      <Filter>dx12</Filter>
+    </ClInclude>
+    <ClInclude Include="dx12\D3D12Viewport.h">
+      <Filter>dx12</Filter>
+    </ClInclude>
+    <ClInclude Include="dx12\d3dx12.h">
+      <Filter>dx12</Filter>
+    </ClInclude>
+    <ClInclude Include="dx12\D3D12DescriptorHeapManager.h">
+      <Filter>dx12</Filter>
+    </ClInclude>
+    <ClInclude Include="dx12\WindowsD3D12Device.h">
+      <Filter>dx12</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer_DX12.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dx11\D3D11Material.h">
+      <Filter>dx11</Filter>
+    </ClInclude>
+    <ClInclude Include="dx12\D3D12Material.h">
+      <Filter>dx12</Filter>
+    </ClInclude>
+    <ClInclude Include="DemoCanvasBase.h">
+      <Filter>Demo</Filter>
+    </ClInclude>
+    <ClInclude Include="DemoCanvas.h">
+      <Filter>Demo</Filter>
+    </ClInclude>
+    <ClInclude Include="cbComboBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cbScaleBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cbString.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dx11\D3D11Buffer.cpp">
+      <Filter>dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="dx11\D3D11CommandBuffer.cpp">
+      <Filter>dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="dx11\D3D11FrameBuffer.cpp">
+      <Filter>dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="dx11\D3D11Pipeline.cpp">
+      <Filter>dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="dx11\D3D11Shader.cpp">
+      <Filter>dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="dx11\D3D11ShaderStates.cpp">
+      <Filter>dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="dx11\D3D11Texture.cpp">
+      <Filter>dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="dx11\D3D11Viewport.cpp">
+      <Filter>dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="dx11\WindowsD3D11Device.cpp">
+      <Filter>dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer_DX11.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cbTextBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowsApplication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowsPlatform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dx12\D3D12Buffer.cpp">
+      <Filter>dx12</Filter>
+    </ClCompile>
+    <ClCompile Include="dx12\D3D12CommandBuffer.cpp">
+      <Filter>dx12</Filter>
+    </ClCompile>
+    <ClCompile Include="dx12\D3D12FrameBuffer.cpp">
+      <Filter>dx12</Filter>
+    </ClCompile>
+    <ClCompile Include="dx12\D3D12Pipeline.cpp">
+      <Filter>dx12</Filter>
+    </ClCompile>
+    <ClCompile Include="dx12\D3D12Shader.cpp">
+      <Filter>dx12</Filter>
+    </ClCompile>
+    <ClCompile Include="dx12\D3D12Texture.cpp">
+      <Filter>dx12</Filter>
+    </ClCompile>
+    <ClCompile Include="dx12\D3D12Viewport.cpp">
+      <Filter>dx12</Filter>
+    </ClCompile>
+    <ClCompile Include="dx12\D3D12DescriptorHeapManager.cpp">
+      <Filter>dx12</Filter>
+    </ClCompile>
+    <ClCompile Include="dx12\WindowsD3D12Device.cpp">
+      <Filter>dx12</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer_DX12.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dx11\D3D11Material.cpp">
+      <Filter>dx11</Filter>
+    </ClCompile>
+    <ClCompile Include="dx12\D3D12Material.cpp">
+      <Filter>dx12</Filter>
+    </ClCompile>
+    <ClCompile Include="DemoCanvasBase.cpp">
+      <Filter>Demo</Filter>
+    </ClCompile>
+    <ClCompile Include="DemoCanvas.cpp">
+      <Filter>Demo</Filter>
+    </ClCompile>
+    <ClCompile Include="cbComboBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cbScaleBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Sample1.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Sample1.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
