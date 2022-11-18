@@ -145,7 +145,7 @@ void WindowsPlatform::InitGI()
 	CreateWindows(L"Sample1", rect, WindowFullscreen);
 	
 	bool bD3D12 = false;
-	bD3D12 = true;
+	//bD3D12 = true;
 
 	if (bD3D12)
 		Device = std::make_unique<WindowsD3D12Device>();
