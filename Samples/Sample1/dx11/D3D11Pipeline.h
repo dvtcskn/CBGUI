@@ -29,7 +29,6 @@
 #include <map>
 #include "D3D11Shader.h"
 #include "D3D11ShaderStates.h"
-#include "D3D11CommandBuffer.h"
 #include "AbstractLayer.h"
 
 struct PipelineDesc
@@ -62,12 +61,14 @@ public:
 		ClearPipelineState();
 	}
 
-	void ApplyPipeline(D3D11CommandBuffer* InCMDBuffer = nullptr) const;
+	void ApplyPipeline(ID3D11DeviceContext1* Context, std::uint32_t StencilRef = 0) const;
 	void ClearPipelineState();
 	PipelineDesc GetPipelineDesc() const { return Desc; }
 
 	std::vector<ShaderAttachment> GetShaderAttachments() const { return ShaderAttachments; }
 	std::vector<VertexAttributeDesc> GetVertexAttribute() const { return VertexAttribute->GetVertexAttributeDesc(); }
+
+	void SetStencilRef(ID3D11DeviceContext1* Context, std::uint32_t Ref);
 
 	void Recompile();
 

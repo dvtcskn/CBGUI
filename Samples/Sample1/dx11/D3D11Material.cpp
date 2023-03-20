@@ -93,5 +93,5 @@ void D3D11Material::RecompileProgram()
 
 void D3D11Material::ApplyMaterial(D3D11CommandBuffer* InCMDBuffer) const
 {
-	Pipeline->ApplyPipeline(InCMDBuffer);
+	InCMDBuffer->SetPipeline(Pipeline.get());
 }

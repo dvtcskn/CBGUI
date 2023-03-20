@@ -31,6 +31,7 @@ using namespace Microsoft::WRL;
 
 #include "WindowsD3D11Device.h"
 #include "AbstractLayer.h"
+#include "D3D11Pipeline.h"
 
 class D3D11FrameBuffer;
 
@@ -47,9 +48,13 @@ public:
 	void ExecuteCommandList();
 	void ClearState();
 
+	void SetViewport(const D3D11_VIEWPORT& Viewport);
+
 	void SetScissorRect(std::uint32_t X, std::uint32_t Y, std::uint32_t Z, std::uint32_t W);
-	void SetStencilRef(std::uint32_t Ref) { StencilRef = Ref; }
+	void SetStencilRef(std::uint32_t Ref);
 	std::uint32_t GetStencilRef() const { return StencilRef; }
+
+	void SetPipeline(D3D11Pipeline* Pipeline);
 
 	void Draw(std::uint32_t VertexCount, std::uint32_t VertexStartOffset = 0);
 	void DrawIndexedInstanced(std::uint32_t IndexCountPerInstance, std::uint32_t InstanceCount, std::uint32_t StartIndexLocation, INT BaseVertexLocation, std::uint32_t StartInstanceLocation);
@@ -74,6 +79,8 @@ private:
 	WindowsD3D11Device* Owner;
 	ComPtr<ID3D11CommandList> CommandList;
 	ComPtr<ID3D11DeviceContext1> DeferredCTX;
+
+	D3D11Pipeline* ActivePipeline;
 
 	bool bIsSingleThreaded;
 	std::uint32_t StencilRef;

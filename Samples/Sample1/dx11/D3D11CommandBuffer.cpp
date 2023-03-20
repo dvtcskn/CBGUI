@@ -37,6 +37,7 @@ D3D11CommandBuffer::D3D11CommandBuffer()
 	, Owner(D3D11Factory::Get().GetOwner())
 	, StencilRef(0)
 	, bIsSingleThreaded(true)
+	, ActivePipeline(nullptr)
 {
 	//bIsSingleThreaded = !Owner->IsNvDeviceID();
 
@@ -62,6 +63,8 @@ D3D11CommandBuffer::~D3D11CommandBuffer()
 
 	CommandList = nullptr;
 	Owner = nullptr;
+
+	ActivePipeline = nullptr;
 }
 
 void D3D11CommandBuffer::BeginRecordCommandList()
@@ -99,6 +102,7 @@ void D3D11CommandBuffer::ExecuteCommandList()
 		);
 		CommandList = nullptr;
 	}
+	ActivePipeline = nullptr;
 }
 
 void D3D11CommandBuffer::ClearState()
@@ -107,13 +111,37 @@ void D3D11CommandBuffer::ClearState()
 	StencilRef = 0;
 }
 
+void D3D11CommandBuffer::SetViewport(const D3D11_VIEWPORT& Viewport)
+{
+	DeferredCTX->RSSetViewports(1, &Viewport);
+}
+
+void D3D11CommandBuffer::SetPipeline(D3D11Pipeline* Pipeline)
+{
+	ActivePipeline = Pipeline ? static_cast<D3D11Pipeline*>(Pipeline) : nullptr;
+	if (ActivePipeline)
+		ActivePipeline->ApplyPipeline(DeferredCTX.Get(), StencilRef);
+}
+
 void D3D11CommandBuffer::Draw(std::uint32_t VertexCount, std::uint32_t VertexStartOffset)
 {
+	if (!ActivePipeline)
+	{
+		throw std::runtime_error("Pipeline is not set.");
+		return;
+	}
+
 	DeferredCTX->Draw(VertexCount, VertexStartOffset);
 }
 
 void D3D11CommandBuffer::DrawIndexedInstanced(std::uint32_t IndexCountPerInstance, std::uint32_t InstanceCount, std::uint32_t StartIndexLocation, INT BaseVertexLocation, std::uint32_t StartInstanceLocation)
 {
+	if (!ActivePipeline)
+	{
+		throw std::runtime_error("Pipeline is not set.");
+		return;
+	}
+
 	DeferredCTX->DrawIndexedInstanced(IndexCountPerInstance, InstanceCount, StartIndexLocation, BaseVertexLocation, StartInstanceLocation);
 
 	ID3D11ShaderResourceView* pSRVs[D3D11_COMMONSHADER_INPUT_RESOURCE_SLOT_COUNT] = { 0 };
@@ -125,6 +153,12 @@ void D3D11CommandBuffer::DrawIndexedInstanced(std::uint32_t IndexCountPerInstanc
 
 void D3D11CommandBuffer::DrawIndexedInstanced(const ObjectDrawParameters& DrawParameters)
 {
+	if (!ActivePipeline)
+	{
+		throw std::runtime_error("Pipeline is not set.");
+		return;
+	}
+
 	DrawIndexedInstanced(
 		DrawParameters.IndexCountPerInstance,
 		DrawParameters.InstanceCount,
@@ -141,6 +175,19 @@ void D3D11CommandBuffer::SetScissorRect(std::uint32_t X, std::uint32_t Y, std::u
 	Rect.bottom = Z;
 	Rect.right = W;
 	DeferredCTX->RSSetScissorRects(1, &Rect);
+}
+
+void D3D11CommandBuffer::SetStencilRef(std::uint32_t Ref)
+{
+	if (ActivePipeline)
+	{
+		StencilRef = Ref;
+		ActivePipeline->SetStencilRef(DeferredCTX.Get(), StencilRef);
+	}
+	else
+	{
+		throw std::runtime_error("Pipeline is not set.");
+	}
 }
 
 void D3D11CommandBuffer::SetRenderTarget(UINT NumViews, ID3D11RenderTargetView* const* ppRenderTargetViews, ID3D11DepthStencilView* pDepthStencilView)

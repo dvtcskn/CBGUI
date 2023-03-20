@@ -686,7 +686,7 @@ bool Renderer_DX11::DepthPass(cbgui::cbWidgetObj* Widget)
 
 		WidgetConstantBuffer->ApplyConstantBuffer(CMD.get());
 		CMD->SetScissorRect(0, 0, Owner->GetWindowHeight(), Owner->GetWindowWidth());
-		DepthMainPipeline->ApplyPipeline(CMD.get());
+		CMD->SetPipeline(DepthMainPipeline.get());
 		CMD->Draw(4);
 	}
 	{
@@ -705,7 +705,7 @@ bool Renderer_DX11::DepthPass(cbgui::cbWidgetObj* Widget)
 
 		WidgetConstantBuffer->ApplyConstantBuffer(CMD.get());
 		CMD->SetScissorRect(0, 0, Owner->GetWindowHeight(), Owner->GetWindowWidth());
-		DepthPipeline->ApplyPipeline(CMD.get());
+		CMD->SetPipeline(DepthPipeline.get());
 		CMD->Draw(4);
 	}
 

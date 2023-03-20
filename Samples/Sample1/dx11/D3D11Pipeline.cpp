@@ -68,10 +68,9 @@ void D3D11Pipeline::CreatePipelineState(PipelineDesc InDesc)
 	Owner->GetDevice()->CreateBlendState1(&InDesc.BlendAttribute, BlendState.GetAddressOf());
 }
 
-void D3D11Pipeline::ApplyPipeline(D3D11CommandBuffer* InCMDBuffer) const
+void D3D11Pipeline::ApplyPipeline(ID3D11DeviceContext1* Context, std::uint32_t StencilRef) const
 {
-	D3D11CommandBuffer* CMDBuffer = InCMDBuffer ? static_cast<D3D11CommandBuffer*>(InCMDBuffer) : nullptr;
-	ID3D11DeviceContext1* CMD = CMDBuffer ? CMDBuffer->GetDeferredCTX() : Owner->GetDeviceIMContext();
+	ID3D11DeviceContext1* CMD = Context;
 
 	{
 		ID3D11Buffer* pCBs[D3D11_COMMONSHADER_CONSTANT_BUFFER_API_SLOT_COUNT] = { 0 };
@@ -150,7 +149,7 @@ void D3D11Pipeline::ApplyPipeline(D3D11CommandBuffer* InCMDBuffer) const
 		CMD->RSSetState(nullptr);
 
 	if (DepthStencilState)
-		CMD->OMSetDepthStencilState(DepthStencilState.Get(), CMDBuffer ? CMDBuffer->GetStencilRef() : 0);
+		CMD->OMSetDepthStencilState(DepthStencilState.Get(), StencilRef);
 	else
 		CMD->OMSetDepthStencilState(nullptr, 0);
 
@@ -180,6 +179,14 @@ void D3D11Pipeline::ClearPipelineState()
 	InputLayout = nullptr;
 
 	ShaderAttachments.clear();
+}
+
+void D3D11Pipeline::SetStencilRef(ID3D11DeviceContext1* Context, std::uint32_t Ref)
+{
+	if (DepthStencilState)
+		Context->OMSetDepthStencilState(DepthStencilState.Get(), Ref);
+	else
+		Context->OMSetDepthStencilState(nullptr, 0);
 }
 
 void D3D11Pipeline::Recompile()
