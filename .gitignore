@@ -48,3 +48,4 @@ ipch
 *.user
 *.suo
 *.VC.db
+/Samples/Sample1/x64
