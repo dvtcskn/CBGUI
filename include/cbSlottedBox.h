@@ -186,11 +186,9 @@ namespace cbgui
 		}
 
 		template<class T>
-		constexpr T* GetOwner(const bool Dynamic = false) const
+		constexpr T* GetOwner() const
 		{
-			if (Dynamic)
-				return dynamic_cast<T*>(Owner);
-			return static_cast<T*>(Owner);
+			return cbgui::cbCast<T>(Owner);
 		}
 		virtual bool HasOwner() const override final { return Owner != nullptr; }
 		virtual cbWidgetObj* GetOwner() const override final { return Owner; }
@@ -210,11 +208,9 @@ namespace cbgui
 		/* Returns Shared Content. */
 		virtual cbWidget::SharedPtr GetSharedContent() const = 0;
 		template<class T>
-		T* GetContent(const bool Dynamic = false) const
+		T* GetContent() const
 		{
-			if (Dynamic)
-				return dynamic_cast<T*>(GetContent());
-			return static_cast<T*>(GetContent());
+			return cbgui::cbCast<T>(GetContent());
 		}
 		/* Returns Raw Content. */
 		virtual cbWidget* GetContent() const = 0;

@@ -73,21 +73,17 @@ namespace cbgui
 
 		bool IsItAttachedToComponent() const { return ComponentOwner != nullptr; }
 		template<class T>
-		T* GetComponentOwner(const bool Dynamic = false) const
+		T* GetComponentOwner() const
 		{
-			if (Dynamic)
-				return dynamic_cast<T*>(GetComponentOwner());
-			return static_cast<T*>(GetComponentOwner());
+			return cbgui::cbCast<T>(GetComponentOwner());
 		}
 		cbComponent* GetComponentOwner() const { return ComponentOwner; }
 
 		virtual bool HasOwner() const override final { return Owner != nullptr; }
 		template<class T>
-		constexpr T* GetOwner(const bool Dynamic = false) const
+		constexpr T* GetOwner() const
 		{
-			if (Dynamic)
-				return dynamic_cast<T*>(GetOwner());
-			return static_cast<T*>(GetOwner());
+			return cbgui::cbCast<T>(GetOwner());
 		}
 
 		virtual cbWidgetObj* GetOwner() const override final { return Owner; }

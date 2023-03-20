@@ -336,11 +336,9 @@ namespace cbgui
 
 		virtual std::vector<cbSlot*> GetSlots() const override final;
 		template<class T>
-		T* GetSlot(const std::size_t Index, const bool Dynamic = false) const
+		T* GetSlot(const std::size_t Index) const
 		{
-			if (Dynamic)
-				return dynamic_cast<T*>(GetSlot(Index));
-			return static_cast<T*>(GetSlot(Index));
+			return cbgui::cbCast<T>(GetSlot(Index));
 		}
 		virtual cbSlot* GetSlot(const std::size_t Index) const override final { return Index < slotsize ? mSlots[Index].get() : nullptr; }
 		inline bool IsIndexExist(const std::size_t Index) const { return GetSlot(Index) != nullptr ? true : false; }

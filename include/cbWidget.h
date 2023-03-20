@@ -98,11 +98,9 @@ namespace cbgui
 
 		/* Returns owner by index. */
 		template<class T>
-		T* GetRootOwner(std::optional<std::size_t> OwnerIndex = std::nullopt, const bool SkipSlot = true, const bool Dynamic = false) const
+		T* GetRootOwner(std::optional<std::size_t> OwnerIndex = std::nullopt, const bool SkipSlot = true) const
 		{
-			if (Dynamic)
-				return dynamic_cast<T*>(GetRootOwner(OwnerIndex, SkipSlot));
-			return static_cast<T*>(GetRootOwner(OwnerIndex, SkipSlot));
+			return cbgui::cbCast<T>(GetRootOwner(OwnerIndex, SkipSlot));
 		}
 		/* Returns owner by index. */
 		cbWidgetObj* GetRootOwner(std::optional<std::size_t> OwnerIndex = std::nullopt, const bool SkipSlot = true) const;
@@ -236,21 +234,17 @@ namespace cbgui
 
 	public:
 		template<class T>
-		constexpr T* GetOwner(const bool Dynamic = false) const
+		constexpr T* GetOwner() const
 		{
-			if (Dynamic)
-				return dynamic_cast<T*>(Owner);
-			return static_cast<T*>(Owner);
+			return cbgui::cbCast<T>(Owner);
 		}
 		virtual bool HasOwner() const override final;
 		virtual cbWidgetObj* GetOwner() const override final;
 
 		template<class T>
-		T* GetCanvas(const bool Dynamic = false) const
+		T* GetCanvas() const
 		{
-			if (Dynamic)
-				return dynamic_cast<T*>(GetCanvas());
-			return static_cast<T*>(GetCanvas());
+			return cbgui::cbCast<T>(GetCanvas());
 		}
 		/* If the canvas does not exist, it checks if the owner has a canvas. */
 		virtual bool HasCanvas() const;

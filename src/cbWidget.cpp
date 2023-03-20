@@ -45,7 +45,7 @@ namespace cbgui
 		OwnerSearch:
 			if (SkipSlot)
 			{
-				if (dynamic_cast<cbSlot*>(TempOwner))
+				if (cbgui::cbCast<cbSlot>(TempOwner))
 				{
 					if (!TempOwner->HasOwner())
 						return nullptr;

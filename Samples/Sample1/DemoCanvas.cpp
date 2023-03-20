@@ -2382,7 +2382,7 @@ private:
 
 			for (std::size_t i = 0; i < MenuBar->GetSlotSize(); i++)
 			{
-				const auto MenuButton = MenuBar->GetSlot(i)->GetContent<cbMenuButton>(true);
+				const auto MenuButton = MenuBar->GetSlot(i)->GetContent<cbMenuButton>();
 
 				if (MenuButton)
 				{
@@ -3232,7 +3232,7 @@ private:
 				{
 					for (std::size_t i = 0; i < GetSlotSize(); i++)
 					{
-						const auto ButtonBase = GetSlot(i)->GetContent<cbOptionVariable>(true);
+						const auto ButtonBase = GetSlot(i)->GetContent<cbOptionVariable>();
 
 						if (ButtonBase && Index == i)
 						{
@@ -3245,7 +3245,7 @@ private:
 				{
 					for (std::size_t i = 0; i < GetSlotSize(); i++)
 					{
-						const auto ButtonBase = GetSlot(i)->GetContent<cbOptionVariable>(true);
+						const auto ButtonBase = GetSlot(i)->GetContent<cbOptionVariable>();
 
 						if (ButtonBase)
 						{
@@ -4018,7 +4018,7 @@ private:
 				std::size_t Index = BTN->GetSubMenuIndex().value();
 				for (std::size_t i = 0; i < OptionList->GetSlotSize(); i++)
 				{
-					const auto SubMenu = OptionList->GetSlot(i)->GetContent<cbOptionSubMenuButtonVar>(true);
+					const auto SubMenu = OptionList->GetSlot(i)->GetContent<cbOptionSubMenuButtonVar>();
 
 					if (SubMenu)
 					{
@@ -4054,7 +4054,7 @@ private:
 			{
 				for (std::size_t i = 0; i < OptionList->GetSlotSize(); i++)
 				{
-					const auto SubMenu = OptionList->GetSlot(i)->GetContent<cbOptionSubMenuButtonVar>(true);
+					const auto SubMenu = OptionList->GetSlot(i)->GetContent<cbOptionSubMenuButtonVar>();
 
 					if (SubMenu)
 					{
@@ -5340,7 +5340,7 @@ public:
 
 		for (std::size_t i = 0; i < MenuAutoScroller->Scrollbox->GetSlotSize(); i++)
 		{
-			const auto MenuButton = MenuAutoScroller->Scrollbox->GetSlot(i)->GetContent<cbMenuButton>(true);
+			const auto MenuButton = MenuAutoScroller->Scrollbox->GetSlot(i)->GetContent<cbMenuButton>();
 
 			if (MenuButton)
 			{
@@ -5562,7 +5562,7 @@ void DemoCanvas::Add(const std::shared_ptr<cbWidget>& Object)
 {
 	Super::Add(Object);
 
-	if (auto Popup = dynamic_cast<cbPopupMenuBase*>(Object.get()))
+	if (auto Popup = cbgui::cbCast<cbPopupMenuBase>(Object.get()))
 	{
 		PopupMenu = Popup;
 		Focus = PopupMenu;
@@ -5573,7 +5573,7 @@ void DemoCanvas::RemoveFromCanvas(cbWidget* Object)
 {
 	if (PopupMenu)
 	{
-		if (auto Popup = dynamic_cast<cbPopupMenuBase*>(Object))
+		if (auto Popup = cbgui::cbCast<cbPopupMenuBase>(Object))
 		{
 			PopupMenu = nullptr;
 			Focus = MainMenu.get();

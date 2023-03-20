@@ -110,11 +110,12 @@ public:
 
 			virtual void SelectOption(cbWidgetObj* Widget)
 			{
-				if (auto pText = dynamic_cast<cbString*>(Widget))
+				if (auto pText = cbgui::cbCast<cbString>(Widget))
 				{
 					Text->SetText(pText->GetText());
 					Text->SetHeight(12);
-					GetOwner<cbComboBoxMenuSlot>()->OnSelected(Widget);
+					if (auto Root = GetRootOwner<cbComboBoxMenuSlot>(1, false))
+						Root->OnSelected(Widget);
 				}
 			}
 

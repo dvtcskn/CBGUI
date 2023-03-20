@@ -128,7 +128,7 @@ public:
 
 			void SetTextVertexColorStyle(const cbVertexColorStyle& style)
 			{
-				if (auto Text = dynamic_cast<cbString*>(GetContent()))
+				if (auto Text = cbgui::cbCast<cbString>(GetContent()))
 					Text->SetVertexColorStyle(style);
 			}
 
