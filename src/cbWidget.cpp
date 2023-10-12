@@ -103,7 +103,7 @@ namespace cbgui
 		, CanvasAnchor(Widget.CanvasAnchor)
 		, VerticalAnchor(Widget.VerticalAnchor)
 		, HorizontalAnchor(Widget.HorizontalAnchor)
-		, Owner(NewOwner ? NewOwner : Widget.Owner)
+		, Owner(NewOwner)
 		, Canvas(Widget.Canvas)
 		, bIsAlignedToCanvas(Widget.bIsAlignedToCanvas)
 		, bIsEnabled(Widget.bIsEnabled)
