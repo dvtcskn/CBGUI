@@ -62,7 +62,7 @@ namespace cbgui
 		, MaximumHeight(Other.MaximumHeight)
 	{
 		if (Other.Slot)
-			SetSlot(Slot->Clone<cbSizeBoxSlot>(this));
+			SetSlot(Other.Slot->Clone<cbSizeBoxSlot>(this));
 	}
 
 	cbSizeBox::~cbSizeBox()
