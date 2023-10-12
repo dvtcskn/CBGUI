@@ -42,6 +42,11 @@ namespace cbgui
 			, bIsItWrapped(false)
 		{}
 
+		cbSlottedBox(const cbSlottedBox& Widget, cbSlot* NewOwner = nullptr)
+			: cbWidget(Widget, NewOwner)
+			, bIsItWrapped(Widget.bIsItWrapped)
+		{}
+
 	private:
 		bool bIsItWrapped;
 
@@ -141,6 +146,12 @@ namespace cbgui
 			, bIsEnabled(true)
 		{}
 
+		cbSlot(const cbSlot& Widget, cbSlottedBox* NewOwner)
+			: Super()
+			, Owner(NewOwner ? NewOwner : Widget.Owner)
+			, bIsEnabled(Widget.bIsEnabled)
+		{}
+
 	public:
 		virtual ~cbSlot()
 		{
@@ -153,6 +164,11 @@ namespace cbgui
 	private:
 		virtual void OnBeginPlay() { }
 		virtual void OnTick(float DeltaTime) { }
+
+	public:
+		template<typename T>
+		std::shared_ptr<T> Clone(cbSlottedBox* NewOwner) { return std::static_pointer_cast<T>(CloneSlot(NewOwner)); }
+		virtual cbSlot::SharedPtr CloneSlot(cbSlottedBox* NewOwner) = 0;
 
 	public:
 		virtual std::string GetName() const override;
@@ -202,8 +218,8 @@ namespace cbgui
 		std::shared_ptr<T> GetSharedContent(const bool Dynamic = false) const
 		{
 			if (Dynamic)
-				return std::dynamic_pointer_cast<T>(GetContent());
-			return std::static_pointer_cast<T>(GetContent());
+				return std::dynamic_pointer_cast<T>(GetSharedContent());
+			return std::static_pointer_cast<T>(GetSharedContent());
 		}
 		/* Returns Shared Content. */
 		virtual cbWidget::SharedPtr GetSharedContent() const = 0;

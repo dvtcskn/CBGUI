@@ -836,22 +836,38 @@ namespace cbgui
 		, CustomWrapSize(std::nullopt)
 		, FontFamily(static_cast<cbFreeTypeFontFamily*>(FontFamily))
 		, LineHeightPercentage(1.0f)
-		, TextDesc(TextDesc)
+		, TextDesc(cbTextDesc())
 	{
 		TextMetrics.FontName = FontFamily->GetFontFamilyName();
 	}
 
-	cbFontGeometry::cbFontGeometry(cbText* pOwner, const std::u32string& inText, const cbTextDesc& TextDesc, cbIFontFamily* FontFamily)
+	cbFontGeometry::cbFontGeometry(cbText* pOwner, const std::u32string& inText, const cbTextDesc& InTextDesc, cbIFontFamily* FontFamily)
 		: Owner(pOwner)
 		, bAutoWrapText(false)
 		, CustomWrapSize(std::nullopt)
 		, FontFamily(static_cast<cbFreeTypeFontFamily*>(FontFamily))
 		, LineHeightPercentage(1.0f)
-		, TextDesc(TextDesc)
+		, TextDesc(InTextDesc)
 	{
 		TextMetrics.FontName = FontFamily->GetFontFamilyName();
 		SetText(inText, TextDesc);
 	}
+
+	cbFontGeometry::cbFontGeometry(const cbFontGeometry& Other, cbText* pOwner)
+		: Owner(pOwner)
+		, bAutoWrapText(Other.bAutoWrapText)
+		, CustomWrapSize(Other.CustomWrapSize)
+		, FontFamily(Other.FontFamily)
+		, LineHeightPercentage(Other.LineHeightPercentage)
+		, TextDesc(Other.TextDesc)
+		, Style(Other.Style)
+		, TextMetrics(Other.TextMetrics)
+		, DefaultSpaceWidth(Other.DefaultSpaceWidth)
+		, Vertices(Other.Vertices)
+		, VertexColors(Other.VertexColors)
+		, TextureCoordinates(Other.TextureCoordinates)
+		, CachedBounds(Other.CachedBounds)
+	{}
 
 	cbFontGeometry::~cbFontGeometry()
 	{

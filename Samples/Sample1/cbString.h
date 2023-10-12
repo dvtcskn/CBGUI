@@ -25,6 +25,7 @@
 */
 #pragma once
 
+#include <cbSlottedBox.h>
 #include <cbText.h>
 #include <cbFont.h>
 #include <optional>
@@ -131,6 +132,15 @@ public:
 	cbString(const std::u32string& Text = U"", const cbgui::cbTextDesc& TextDesc = cbgui::cbTextDesc())
 		: cbgui::cbText(Text, TextDesc, cbFontResources::Get().GetFontFamily(0))
 	{}
+
+	cbString(const cbString& String, cbgui::cbSlot* NewOwner = nullptr)
+		: Super(String, NewOwner)
+	{}
+
+	cbWidget::SharedPtr CloneWidget(cbgui::cbSlot* NewOwner)
+	{
+		return cbString::Create(*this, NewOwner);
+	}
 
 	void SetString(const std::string& Text, const std::optional<cbgui::cbTextDesc> TextDesc = std::nullopt) 
 	{

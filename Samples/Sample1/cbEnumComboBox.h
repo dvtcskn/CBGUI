@@ -55,12 +55,23 @@ public:
 		SelectItem(0);
 	}
 
+	cbCanvasAnchorComboBox(const cbCanvasAnchorComboBox& Widget, cbSlot* NewOwner)
+		: Super(Widget, NewOwner)
+		, AnchorStrings(Widget.AnchorStrings)
+		, fCallBack(Widget.fCallBack)
+	{}
+
 	std::function<void(eCanvasAnchor)> fCallBack;
 
 	virtual ~cbCanvasAnchorComboBox()
 	{
 		fCallBack = nullptr;
 		AnchorStrings.clear();
+	}
+
+	virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override
+	{
+		return cbCanvasAnchorComboBox::Create(*this, NewOwner);
 	}
 
 	virtual void OnSelectionChanged(cbSlot* SelectedOption) 
@@ -97,12 +108,23 @@ public:
 		SelectItem(0);
 	}
 
+	cbVerticalAlignmentComboBox(const cbVerticalAlignmentComboBox& Widget, cbSlot* NewOwner)
+		: Super(Widget, NewOwner)
+		, AnchorStrings(Widget.AnchorStrings)
+		, fCallBack(Widget.fCallBack)
+	{}
+
 	std::function<void(eVerticalAlignment)> fCallBack;
 
 	virtual ~cbVerticalAlignmentComboBox()
 	{
 		fCallBack = nullptr;
 		AnchorStrings.clear();
+	}
+
+	virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override
+	{
+		return cbVerticalAlignmentComboBox::Create(*this, NewOwner);
 	}
 
 	virtual void OnSelectionChanged(cbSlot* SelectedOption)
@@ -139,12 +161,23 @@ public:
 		SelectItem(0);
 	}
 
+	cbHorizontalAlignmentComboBox(const cbHorizontalAlignmentComboBox& Widget, cbSlot* NewOwner)
+		: Super(Widget, NewOwner)
+		, AnchorStrings(Widget.AnchorStrings)
+		, fCallBack(Widget.fCallBack)
+	{}
+
 	std::function<void(eHorizontalAlignment)> fCallBack;
 
 	virtual ~cbHorizontalAlignmentComboBox()
 	{
 		fCallBack = nullptr;
 		AnchorStrings.clear();
+	}
+
+	virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override
+	{
+		return cbHorizontalAlignmentComboBox::Create(*this, NewOwner);
 	}
 
 	virtual void OnSelectionChanged(cbSlot* SelectedOption)
@@ -179,12 +212,23 @@ public:
 		SelectItem(0);
 	}
 
+	cbAnchorComboBox(const cbAnchorComboBox& Widget, cbSlot* NewOwner)
+		: Super(Widget, NewOwner)
+		, AnchorStrings(Widget.AnchorStrings)
+		, fCallBack(Widget.fCallBack)
+	{}
+
 	std::function<void(eAnchors)> fCallBack;
 
 	virtual ~cbAnchorComboBox()
 	{
 		fCallBack = nullptr;
 		AnchorStrings.clear();
+	}
+
+	virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override
+	{
+		return cbAnchorComboBox::Create(*this, NewOwner);
 	}
 
 	virtual void OnSelectionChanged(cbSlot* SelectedOption)

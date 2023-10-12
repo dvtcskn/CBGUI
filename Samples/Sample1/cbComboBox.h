@@ -41,8 +41,13 @@ public:
 	class cbComboBoxMenuInterface : public cbOverlay
 	{
 		cbClassBody(cbClassDefaultProtectedConstructor, cbComboBoxMenuInterface, cbOverlay);
+	protected:
+		cbComboBoxMenuInterface(const cbOverlay& Other, cbSlot* NewOwner = nullptr)
+			: Super(Other, NewOwner)
+		{}
+
 	public:
-		virtual void SelectOption(cbWidgetObj* Widget) {}
+		virtual void SelectOption(cbWidgetObj* Widget) = 0;
 
 		virtual void OnOpen() {}
 		virtual void OnClose() {}
@@ -71,7 +76,16 @@ public:
 					: Super()
 				{}
 
+				cbComboBoxMenuButton(const cbComboBoxMenuButton& ComboBoxMenuButton, cbSlot* NewOwner)
+					: Super(ComboBoxMenuButton, NewOwner)
+				{}
+
 				virtual ~cbComboBoxMenuButton() = default;
+
+				virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override
+				{
+					return cbComboBoxMenuButton::Create(*this, NewOwner);
+				}
 			};
 
 		private:
@@ -102,13 +116,26 @@ public:
 				Insert(Text);
 			}
 
+			cbComboBoxNamedButtonInterface(const cbComboBoxNamedButtonInterface& Interface, cbSlot* NewOwner)
+				: Super(Interface, NewOwner)
+			{
+				BTNStyle = Interface.BTNStyle;
+				BTN = GetSlot(0)->GetSharedContent<cbComboBoxMenuButton>();
+				Text = GetSlot(1)->GetSharedContent<cbString>();
+			}
+
+			virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override
+			{
+				return cbComboBoxNamedButtonInterface::Create(*this, NewOwner);
+			}
+
 			virtual ~cbComboBoxNamedButtonInterface()
 			{
 				BTN = nullptr;
 				Text = nullptr;
 			}
 
-			virtual void SelectOption(cbWidgetObj* Widget)
+			virtual void SelectOption(cbWidgetObj* Widget) override
 			{
 				if (auto pText = cbgui::cbCast<cbString>(Widget))
 				{
@@ -182,10 +209,24 @@ public:
 			Content->AttachToSlot(this);
 		}
 
+		cbComboBoxMenuSlot(const cbComboBoxMenuSlot& Widget, cbSlottedBox* NewOwner)
+			: Super(Widget, NewOwner)
+			, bIsInserted(false)
+			, Content(Widget.Content->Clone<cbSizeBox>())
+			, ComboBoxMenuInterface(cbComboBoxNamedButtonInterface::Create())
+		{
+			Content->AttachToSlot(this);
+		}
+
 		virtual ~cbComboBoxMenuSlot()
 		{
 			ComboBoxMenuInterface = nullptr;
 			Content = nullptr;
+		}
+
+		virtual cbSlot::SharedPtr CloneSlot(cbSlottedBox* NewOwner) override
+		{
+			return cbComboBoxMenuSlot::Create(*this, NewOwner);
 		}
 
 		cbComboBoxMenuInterface* GetMenuInterface() const { return ComboBoxMenuInterface.get(); }
@@ -257,8 +298,11 @@ public:
 
 public:
 	cbComboBox(const cbgui::eOrientation Orientation = cbgui::eOrientation::Vertical);
+	cbComboBox(const cbComboBox& Widget, cbSlot* NewOwner = nullptr);
 public:
 	virtual ~cbComboBox();
+
+	virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override;
 
 public:
 	inline bool IsMenuOpen() const { return bIsOpen; }

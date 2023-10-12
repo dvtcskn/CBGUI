@@ -39,9 +39,24 @@ namespace cbgui
 		, bIsHovered(false)
 	{}
 
+	cbCheckBox::cbCheckBox(const cbCheckBox& Other, cbSlot* NewOwner)
+		: Super(Other, NewOwner)
+		, Transform(Other.Transform)
+		, fOnCheckStateChanged(nullptr)
+		, CheckBoxState(Other.CheckBoxState)
+		, bIsPressed(Other.bIsPressed)
+		, bIsHovered(Other.bIsHovered)
+		, VertexColorStyle(Other.VertexColorStyle)
+	{}
+
 	cbCheckBox::~cbCheckBox()
 	{
 		fOnCheckStateChanged = nullptr;
+	}
+
+	cbWidget::SharedPtr cbCheckBox::CloneWidget(cbSlot* NewOwner)
+	{
+		return cbCheckBox::Create(*this, NewOwner);
 	}
 
 	void cbCheckBox::BeginPlay()

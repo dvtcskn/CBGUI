@@ -53,11 +53,32 @@ namespace cbgui
 		, fLostOnFocus(nullptr)
 	{}
 
+	cbScaleBox::cbScaleBox(const cbScaleBox & Widget, cbSlot * NewOwner)
+		: Super(Widget, NewOwner)
+		, Transform(Widget.Transform)
+		, Scaler(Widget.Scaler)
+		, Slot(nullptr)
+		, bIsActive(Widget.bIsActive)
+		, bStayActiveAfterFocusLost(Widget.bStayActiveAfterFocusLost)
+		, fOnFocus(Widget.fOnFocus)
+		, fLostOnFocus(Widget.fLostOnFocus)
+	{
+		if (Widget.Slot)
+		{
+			SetSlot(Widget.Slot->Clone<cbScaleBoxSlot>(this));
+		}
+	}
+
 	cbScaleBox::~cbScaleBox()
 	{
 		Slot = nullptr;
 		fOnFocus = nullptr;
 		fLostOnFocus = nullptr;
+	}
+
+	cbWidget::SharedPtr cbScaleBox::CloneWidget(cbSlot* NewOwner)
+	{
+		return cbScaleBox::Create(*this, NewOwner);
 	}
 
 	void cbScaleBox::SetXY(std::optional<float> X, std::optional<float> Y, bool Force)

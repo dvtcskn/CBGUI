@@ -56,9 +56,23 @@ namespace cbgui
 					Content->AttachToSlot(this);
 			}
 
+			cbFORCEINLINE cbOverlaySlot(const cbOverlaySlot& Widget, cbSlottedBox* NewOwner)
+				: Super(Widget, NewOwner)
+				, bIsInserted(false)
+				, Content(Widget.Content->CloneWidget())
+			{
+				if (Content)
+					Content->AttachToSlot(this);
+			}
+
 			virtual ~cbOverlaySlot()
 			{
 				Content = nullptr;
+			}
+
+			virtual cbSlot::SharedPtr CloneSlot(cbSlottedBox* NewOwner) override
+			{
+				return cbOverlaySlot::Create(*this, NewOwner);
 			}
 
 			virtual bool IsInserted() const override final { return HasOwner() && bIsInserted; }
@@ -90,6 +104,7 @@ namespace cbgui
 
 	public:
 		cbOverlay();
+		cbOverlay(const cbOverlay& Other, cbSlot* NewOwner = nullptr);
 	public:
 		virtual ~cbOverlay() 
 		{
@@ -98,6 +113,8 @@ namespace cbgui
 			mSlots.clear();
 			slotsize = 0;
 		}
+
+		virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override;
 
 	public:
 		virtual cbVector GetLocation() const override final { return Transform.GetCenter(); }
@@ -184,6 +201,7 @@ namespace cbgui
 		/* If the index is valid, it will replace the contents of the slot. */
 		bool ReplaceSlotContent(std::size_t Index, const cbWidget::SharedPtr& New);
 
+		void RemoveSlots();
 		bool RemoveSlot(const std::size_t SlotIndex);
 	private:
 		/* Called when the Slot or Slot content requested Remove From Parent. */

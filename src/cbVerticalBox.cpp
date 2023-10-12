@@ -49,6 +49,33 @@ namespace cbgui
 		, slotsize(0)
 	{}
 
+	cbgui::cbVerticalBox::cbVerticalBox(const cbVerticalBox& Widget, cbSlot* NewOwner)
+		: Super(Widget)
+		, Transform(Widget.Transform)
+		, slotsize(0)
+	{
+		std::size_t SlotSize = Widget.GetSlotSize();
+		for (std::size_t i = 0; i < SlotSize; i++)
+		{
+			cbVerticalBoxSlot::SharedPtr Slot = Widget.GetSlot(i)->Clone<cbVerticalBoxSlot>(this);
+			Insert(Slot, i);
+		}
+	}
+
+	cbWidget::SharedPtr cbVerticalBox::CloneWidget(cbSlot* NewOwner)
+	{
+		cbVerticalBox::SharedPtr VerticalBox = cbVerticalBox::Create(*this, NewOwner);
+
+		//std::size_t SlotSize = GetSlotSize();
+		//for (std::size_t i = 0; i < SlotSize; i++)
+		//{
+		//	cbVerticalBoxSlot::SharedPtr Slot = GetSlot(i)->Clone<cbVerticalBoxSlot>(VerticalBox.get());
+		//	VerticalBox->Insert(Slot, i);
+		//}
+
+		return VerticalBox;
+	}
+
 	void cbVerticalBox::SetXY(std::optional<float> X, std::optional<float> Y, bool Force)
 	{
 		if (X.has_value() && Y.has_value())
@@ -564,6 +591,25 @@ namespace cbgui
 		pSlot = nullptr;
 
 		return true;
+	}
+
+	void cbVerticalBox::RemoveSlots()
+	{
+		ResetInput();
+		std::size_t SlotSize = GetSlotSize();
+		std::vector<cbVerticalBoxSlot::SharedPtr> SlotsToRemove;
+		for (std::size_t i = 0; i < SlotSize; i++)
+		{
+			SlotsToRemove.push_back(mSlots[i]);
+		}
+		for (std::size_t i = 0; i < SlotsToRemove.size(); i++)
+		{
+			cbSlot::SharedPtr Slot = SlotsToRemove[i];
+			auto Content = Slot->GetContent();
+			Content->RemoveFromParent();
+			Slot = nullptr;
+		}
+		SlotsToRemove.clear();
 	}
 
 	bool cbVerticalBox::RemoveSlot(const std::size_t SlotIndex)

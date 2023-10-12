@@ -60,6 +60,7 @@ namespace cbgui
 
 			public:
 				cbScrollBarHandleComponent(cbScrollBarComponent* pOwner);
+				cbScrollBarHandleComponent(const cbScrollBarHandleComponent& Other, cbScrollBarComponent* pOwner);
 				virtual ~cbScrollBarHandleComponent();
 
 				virtual cbBounds GetBounds() const override final { return cbBounds(GetDimension(), GetLocation()); }
@@ -162,6 +163,21 @@ namespace cbgui
 				, Handle(cbScrollBarHandleComponent::Create(this))
 			{}
 
+			cbScrollBarComponent(const cbScrollBarComponent& Other, cbScrollBox* pOwner)
+				: Super(pOwner)
+				, Thickness(Other.Thickness)
+				, BarThickness(Other.BarThickness)
+				, ScrollAmount(Other.ScrollAmount)
+				, Padding(Other.Padding)
+				, VertexColorStyle(Other.VertexColorStyle)
+				, ScrollStepPercent(Other.ScrollStepPercent)
+				, bIsHidden(bIsHidden)
+				, bShowScrollBarIfScrollable(bShowScrollBarIfScrollable)
+				, Handle(cbScrollBarHandleComponent::Create(*Other.Handle.get(), this))
+			{
+				SetName(Other.GetName());
+			}
+
 			virtual ~cbScrollBarComponent()
 			{
 				Handle = nullptr;
@@ -226,6 +242,7 @@ namespace cbgui
 			inline float GetBarThickness() const { return BarThickness; }
 			/* Sets Handle Thickness */
 			void SetHandleThickness(const float value);
+			float GetHandleThickness() const;
 
 			/* Returns the Scrollbox Length with padding. */
 			float GetLength() const;
@@ -283,9 +300,15 @@ namespace cbgui
 
 		public:
 			cbScrollBoxSlot(cbScrollBox* InOwner, const cbWidget::SharedPtr& pContent);
+			cbScrollBoxSlot(const cbScrollBoxSlot& Widget, cbSlottedBox* NewOwner);
 			virtual ~cbScrollBoxSlot()
 			{
 				Content = nullptr;
+			}
+
+			virtual cbSlot::SharedPtr CloneSlot(cbSlottedBox* NewOwner) override
+			{
+				return cbScrollBoxSlot::Create(*this, NewOwner);
 			}
 
 			virtual bool IsInserted() const override final { return HasOwner() && bIsInserted; }
@@ -311,9 +334,12 @@ namespace cbgui
 
 	public:
 		cbScrollBox(const eOrientation orientation = eOrientation::Vertical);
+		cbScrollBox(const cbScrollBox& Other, cbSlot* NewOwner = nullptr);
 
 	public:
 		virtual ~cbScrollBox();
+
+		virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override;
 
 	public:
 		virtual cbVector GetLocation() const override final { return Transform.GetCenter(); }

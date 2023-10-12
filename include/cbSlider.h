@@ -43,6 +43,7 @@ namespace cbgui
 			cbClassBody(cbClassConstructor, cbSliderHandleComponent, cbComponent);
 		public:
 			cbSliderHandleComponent(cbSlider* pOwner);
+			cbSliderHandleComponent(const cbSliderHandleComponent& eComponent, cbSlider* NewOwner);
 		public:
 			virtual ~cbSliderHandleComponent();
 
@@ -129,7 +130,11 @@ namespace cbgui
 
 	public:
 		cbSlider(eOrientation orientation = eOrientation::Horizontal);
+		cbSlider(const cbSlider& Other, cbSlot* NewOwner = nullptr);
+
 		virtual ~cbSlider();
+
+		virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override;
 
 	private:
 		virtual void BeginPlay() override final;

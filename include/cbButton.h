@@ -49,7 +49,10 @@ namespace cbgui
 
 	public:
 		cbButton();
+		cbButton(const cbButton& Other, cbSlot* NewOwner = nullptr);
 		virtual ~cbButton();
+
+		virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override;
 
 	private:
 		virtual void BeginPlay() override final;

@@ -121,6 +121,7 @@ namespace cbgui
 		friend cbSlot;
 	protected:
 		cbWidget();
+		cbWidget(const cbWidget& Widget, cbSlot* NewOwner = nullptr);
 
 	public:
 		virtual ~cbWidget();
@@ -133,6 +134,10 @@ namespace cbgui
 
 		bool IsItSharedObject() const { return !weak_from_this().expired(); }
 		std::optional<long> GetSharedObjectUseCount() const { if (!IsItSharedObject()) return std::nullopt; return weak_from_this().use_count(); }
+
+		template<typename T>
+		std::shared_ptr<T> Clone(cbSlot* NewOwner = nullptr) { return std::static_pointer_cast<T>(CloneWidget(NewOwner)); }
+		virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) = 0;
 
 		/*
 		* If it has no owner and no canvas, returns the center position.

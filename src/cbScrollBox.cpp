@@ -43,6 +43,21 @@ namespace cbgui
 		, bIsItFocused(false)
 	{}
 
+	cbgui::cbScrollBox::cbScrollBarComponent::cbScrollBarHandleComponent::cbScrollBarHandleComponent(const cbScrollBarHandleComponent& Other, cbScrollBarComponent* pOwner)
+		: Super(pOwner)
+		, ButtonState(Other.ButtonState)
+		, mouseOffset(Other.mouseOffset)
+		, Percent(Other.Percent)
+		, Length(Other.Length)
+		, Thickness(Other.Thickness)
+		, bIsScrollable(Other.bIsScrollable)
+		, LocationOffset(Other.LocationOffset)
+		, bIsItFocused(Other.bIsItFocused)
+		, VertexColorStyle(Other.VertexColorStyle)
+	{
+		SetName(Other.GetName());
+	}
+
 	cbScrollBox::cbScrollBarComponent::cbScrollBarHandleComponent::~cbScrollBarHandleComponent()
 	{
 	}
@@ -469,6 +484,11 @@ namespace cbgui
 		}
 	}
 
+	float cbScrollBox::cbScrollBarComponent::GetHandleThickness() const
+	{
+		return Handle->GetThickness();
+	}
+
 	void cbScrollBox::cbScrollBarComponent::SetBarThickness(const float value)
 	{
 		if (value < Thickness)
@@ -782,6 +802,22 @@ namespace cbgui
 			Content->AttachToSlot(this);
 	}
 
+	cbgui::cbScrollBox::cbScrollBoxSlot::cbScrollBoxSlot(const cbScrollBoxSlot& Widget, cbSlottedBox* NewOwner)
+		: Super(Widget, NewOwner)
+		, bIsInserted(false)
+		, Content(Widget.Content->CloneWidget())
+		, Location(Widget.Location)
+		, Dimension(Widget.Dimension)
+	{
+		UpdateVerticalDimension();
+		UpdateHorizontalDimension();
+		UpdateVerticalLocation();
+		UpdateHorizontalLocation();
+
+		if (Content)
+			Content->AttachToSlot(this);
+	}
+
 	void cbScrollBox::cbScrollBoxSlot::UpdateHorizontalDimension()
 	{
 		const cbScrollBox* ScrollBox = GetOwner<cbScrollBox>();
@@ -905,6 +941,27 @@ namespace cbgui
 		SetScrollBarThickness(10.0f);
 	}
 
+	cbgui::cbScrollBox::cbScrollBox(const cbScrollBox& Other, cbSlot* NewOwner)
+		: Super(Other, NewOwner)
+		, Transform(Other.Transform)
+		, Orientation(Other.Orientation)
+		, slotsize(0)
+		, ScrollBar(cbScrollBarComponent::CreateUnique(*Other.ScrollBar.get(), this))
+	{
+		SetScrollBar_HandleThickness(Other.ScrollBar->GetHandleThickness());
+		SetScrollBarThickness(Other.GetScrollBarThickness());
+
+		std::size_t SlotSize = Other.GetSlotSize();
+		for (std::size_t i = 0; i < SlotSize; i++)
+		{
+			cbScrollBoxSlot::SharedPtr Slot = Other.GetSlot(i)->Clone<cbScrollBoxSlot>(this);
+			Insert(Slot, i);
+		}
+
+		ScrollBar->UpdateAlignments();
+		Scroll(0.0f);
+	}
+
 	cbScrollBox::~cbScrollBox()
 	{
 		ScrollBar = nullptr;
@@ -912,6 +969,21 @@ namespace cbgui
 			Slot = nullptr;
 		mSlots.clear();
 		slotsize = 0;
+	}
+
+	cbWidget::SharedPtr cbScrollBox::CloneWidget(cbSlot* NewOwner)
+	{
+		cbScrollBox::SharedPtr ScrollBox = cbScrollBox::Create(*this, NewOwner);
+
+		/*std::size_t SlotSize = GetSlotSize();
+		for (std::size_t i = 0; i < SlotSize; i++)
+		{
+			cbScrollBoxSlot::SharedPtr Slot = GetSlot(i)->Clone<cbScrollBoxSlot>(ScrollBox.get());
+			ScrollBox->Insert(Slot, i);
+		}
+
+		ScrollBox->Scroll(0.0f);*/
+		return ScrollBox;
 	}
 
 	void cbScrollBox::SetXY(std::optional<float> X, std::optional<float> Y, bool Force)

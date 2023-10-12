@@ -64,9 +64,27 @@ protected:
 			Content->SetVertexColorStyle(cbColor::White());
 		}
 
+		cbTextSlot(const cbTextSlot& Other, cbSlottedBox* NewOwner)
+			: Super(Other, NewOwner)
+			, bIsInserted(false)
+			, Content(Other.Content->Clone<cbString>(this))
+			, Location(Other.Location)
+		{
+			Content->AttachToSlot(this);
+			Content->SetVerticalAlignment(eVerticalAlignment::Align_Fill);
+			Content->SetHorizontalAlignment(eHorizontalAlignment::Align_Fill);
+			Content->SetTextJustify(eTextJustify::Left);
+			Content->SetVertexColorStyle(cbColor::White());
+		}
+
 		virtual ~cbTextSlot()
 		{
 			Content = nullptr;
+		}
+
+		virtual cbSlot::SharedPtr CloneSlot(cbSlottedBox* NewOwner) override
+		{
+			return cbTextSlot::Create(*this, NewOwner);
 		}
 
 	public:
@@ -154,6 +172,19 @@ protected:
 			, CursorLocation(cbVector::Zero())
 			, CursorPosition(eCursorPosition::Left)
 		{}
+
+		cbCursor(const cbCursor& Other, cbTextBox* Owner)
+			: cbComponent(Owner)
+			, ElapsedTime(Other.ElapsedTime)
+			, bIsHidden(Other.bIsHidden)
+			, bIsEnabled(Other.bIsEnabled)
+			, Height(Other.Height)
+			, Thickness(Other.Thickness)
+			, CursorLocation(Other.CursorLocation)
+			, CursorPosition(Other.CursorPosition)
+		{
+			SetName(Other.GetName());
+		}
 
 		virtual ~cbCursor()
 		{
@@ -314,6 +345,16 @@ protected:
 			, HighlightEndIndex(std::nullopt)
 		{}
 
+		TextHighlight(const TextHighlight& Other, cbTextBox* Owner)
+			: cbComponent(Owner)
+			, bIsHidden(Other.bIsHidden)
+			, bIsEnabled(Other.bIsEnabled)
+			, HighlightStartIndex(Other.HighlightStartIndex)
+			, HighlightEndIndex(Other.HighlightEndIndex)
+		{
+			SetName(Other.GetName());
+		}
+
 		virtual ~TextHighlight()
 		{
 			Highlights.clear();
@@ -449,8 +490,12 @@ public:
 public:
 	cbTextBox();
 	cbTextBox(const std::u32string& Text, const cbTextDesc& TextDesc = cbTextDesc());
+	cbTextBox(const cbTextBox& TextBox, cbSlot* NewOwner = nullptr);
+
 public:
 	virtual ~cbTextBox();
+
+	virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override;
 
 public:
 	virtual cbVector GetLocation() const override final { return Transform.GetCenter(); }

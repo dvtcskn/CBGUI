@@ -37,8 +37,19 @@ namespace cbgui
 		SetFocusable(false);
 	}
 
+	cbgui::cbImage::cbImage(const cbImage& Other, cbSlot* NewOwner)
+		: cbWidget(Other, NewOwner)
+		, Transform(Other.Transform)
+		, VertexColorStyle(Other.VertexColorStyle)
+	{}
+
 	cbImage::~cbImage()
 	{
+	}
+
+	cbWidget::SharedPtr cbImage::CloneWidget(cbSlot* NewOwner)
+	{
+		return cbImage::Create(*this, NewOwner);
 	}
 
 	void cbImage::BeginPlay()

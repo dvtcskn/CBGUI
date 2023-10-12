@@ -49,9 +49,29 @@ namespace cbgui
 		, Slot(nullptr)
 	{}
 
+	cbBorder::cbBorder(const cbBorder& Widget, cbSlot* NewOwner)
+		: Super(Widget, NewOwner)
+		, Transform(Widget.Transform)
+		, BorderThickness(Widget.BorderThickness)
+		, Slot(nullptr)
+		, VertexColorStyle(Widget.VertexColorStyle)
+	{
+		if (Widget.Slot)
+		{
+			SetSlot(Widget.Slot->Clone<cbBorderSlot>(this));
+		}
+	}
+
 	cbBorder::~cbBorder()
 	{
 		Slot = nullptr;
+	}
+
+	cbWidget::SharedPtr cbBorder::CloneWidget(cbSlot* NewOwner)
+	{
+		cbBorder::SharedPtr Border = cbBorder::Create(*this, NewOwner);
+		//Border->SetSlot(Slot->Clone<cbBorderSlot>(Border.get()));
+		return Border;
 	}
 
 	void cbBorder::SetXY(std::optional<float> X, std::optional<float> Y, bool Force)

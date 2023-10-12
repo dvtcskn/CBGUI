@@ -37,8 +37,11 @@ namespace cbgui
 		cbClassBody(cbClassConstructor, cbText, cbWidget);
 	public:
 		cbText(const std::u32string& Text, const cbTextDesc& TextDesc, cbIFontFamily* FontFamily);
+		cbText(const cbText& Other, cbSlot* NewOwner = nullptr);
 	public:
 		virtual ~cbText();
+
+		virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override;
 
 	private:
 		virtual void BeginPlay() override final;

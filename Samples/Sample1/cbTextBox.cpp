@@ -100,11 +100,32 @@ cbTextBox::cbTextBox(const std::u32string& Text, const cbTextDesc& TextDesc)
 	TextSlot->Inserted();
 }
 
+cbTextBox::cbTextBox(const cbTextBox& TextBox, cbSlot* NewOwner)
+	: Super(TextBox, NewOwner)
+	, Transform(TextBox.Transform)
+	, TextSlot(nullptr)
+	, SelectedIndex(TextBox.SelectedIndex)
+	, Pressed(TextBox.Pressed)
+	, Cursor(cbCursor::Create(*TextBox.Cursor.get(), this))
+	, Highlight(TextHighlight::Create(*TextBox.Highlight.get(), this))
+	, bEditMode(TextBox.bEditMode)
+	, TextBoxType(TextBox.TextBoxType)
+	, Limit(TextBox.Limit)
+{
+	TextSlot = TextBox.TextSlot->Clone<cbTextSlot>(this);
+	TextSlot->Inserted();
+}
+
 cbTextBox::~cbTextBox()
 {
 	TextSlot = nullptr;
 	Cursor = nullptr;
 	Highlight = nullptr;
+}
+
+cbWidget::SharedPtr cbTextBox::CloneWidget(cbSlot* NewOwner)
+{
+	return cbTextBox::Create(*this, NewOwner);
 }
 
 void cbTextBox::SetXY(std::optional<float> X, std::optional<float> Y, bool Force)

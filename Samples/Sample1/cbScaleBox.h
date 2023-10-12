@@ -47,7 +47,7 @@ namespace cbgui
 			virtual void OnInserted() { }
 
 		public:
-			cbScaleBoxSlot(cbScaleBox* pOwner, const cbWidget::SharedPtr& pContent = nullptr)
+			cbFORCEINLINE cbScaleBoxSlot(cbScaleBox* pOwner, const cbWidget::SharedPtr& pContent = nullptr)
 				: Super(pOwner)
 				, bIsInserted(false)
 				, Content(pContent)
@@ -57,9 +57,24 @@ namespace cbgui
 					Content->AttachToSlot(this);
 			}
 
+			cbFORCEINLINE cbScaleBoxSlot(const cbScaleBoxSlot& Widget, cbSlottedBox* NewOwner)
+				: Super(Widget, NewOwner)
+				, bIsInserted(false)
+				, Content(Widget.Content->CloneWidget())
+				, ZOrderMode(Widget.ZOrderMode)
+			{
+				if (HasContent())
+					Content->AttachToSlot(this);
+			}
+
 			virtual ~cbScaleBoxSlot()
 			{
 				Content = nullptr;
+			}
+
+			virtual cbSlot::SharedPtr CloneSlot(cbSlottedBox* NewOwner) override
+			{
+				return cbScaleBoxSlot::Create(*this, NewOwner);
 			}
 
 		public:
@@ -96,8 +111,11 @@ namespace cbgui
 
 	public:
 		cbScaleBox();
+		cbScaleBox(const cbScaleBox& Widget, cbSlot* NewOwner);
 	public:
 		virtual ~cbScaleBox();
+
+		virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override;
 
 	public:
 		virtual cbVector GetLocation() const override final { return Transform.GetCenter(); }

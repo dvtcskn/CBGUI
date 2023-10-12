@@ -52,9 +52,29 @@ namespace cbgui
 		, MaximumHeight(std::nullopt)
 	{}
 
+	cbgui::cbSizeBox::cbSizeBox(const cbSizeBox& Other, cbSlot* NewOwner)
+		: Super(Other, NewOwner)
+		, Transform(Other.Transform)
+		, Slot(nullptr)
+		, MinimumWidth(Other.MinimumWidth)
+		, MaximumWidth(Other.MaximumWidth)
+		, MinimumHeight(Other.MinimumHeight)
+		, MaximumHeight(Other.MaximumHeight)
+	{
+		if (Other.Slot)
+			SetSlot(Slot->Clone<cbSizeBoxSlot>(this));
+	}
+
 	cbSizeBox::~cbSizeBox()
 	{
 		Slot = nullptr;
+	}
+
+	cbWidget::SharedPtr cbSizeBox::CloneWidget(cbSlot* NewOwner)
+	{
+		cbSizeBox::SharedPtr SizeBox = cbSizeBox::Create(*this, NewOwner);
+		//SizeBox->SetSlot(Slot->Clone<cbSizeBoxSlot>(SizeBox.get()));
+		return SizeBox;
 	}
 
 	void cbSizeBox::SetXY(std::optional<float> X, std::optional<float> Y, bool Force)

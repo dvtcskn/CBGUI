@@ -59,12 +59,27 @@ namespace cbgui
 					Content->AttachToSlot(this);
 			}
 
+			cbFORCEINLINE cbBorderSlot(const cbBorderSlot& Widget, cbSlottedBox* NewOwner)
+				: Super(Widget, NewOwner)
+				, bIsInserted(false)
+				, Content(Widget.Content->CloneWidget())
+				, Location(Widget.Location)
+			{
+				if (Content)
+					Content->AttachToSlot(this);
+			}
+
 			virtual ~cbBorderSlot()
 			{
 				Content = nullptr;
 			}
 
 		public:
+			virtual cbSlot::SharedPtr CloneSlot(cbSlottedBox* NewOwner) override
+			{
+				return cbBorderSlot::Create(*this, NewOwner);
+			}
+
 			virtual bool IsInserted() const override final { return HasOwner() && bIsInserted; }
 
 			virtual void ReplaceContent(const cbWidget::SharedPtr& Content) override final;
@@ -103,7 +118,10 @@ namespace cbgui
 
 	public:
 		cbBorder();
+		cbBorder(const cbBorder& Widget, cbSlot* NewOwner = nullptr);
 		virtual ~cbBorder();
+
+		virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override;
 
 	public:
 		virtual cbVector GetLocation() const override final { return Transform.GetCenter(); }

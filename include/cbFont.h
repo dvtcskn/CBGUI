@@ -743,8 +743,19 @@ namespace cbgui
 	public:
 		cbFontGeometry(cbText* pOwner, cbIFontFamily* FontFamily);
 		cbFontGeometry(cbText* pOwner, const std::u32string& inText, const cbTextDesc& TextDesc, cbIFontFamily* FontFamily);
+		cbFontGeometry(const cbFontGeometry& Other, cbText* pOwner);
 
 		virtual ~cbFontGeometry();
+
+		cbFontGeometry::SharedPtr Clone(cbText* NewOwner)
+		{
+			return cbFontGeometry::Create(*this, NewOwner);
+		}
+
+		cbFontGeometry::UniquePtr CloneUnique(cbText* NewOwner)
+		{
+			return cbFontGeometry::CreateUnique(*this, NewOwner);
+		}
 
 		const cbIFontFamily* GetFontFamily() const { return FontFamily; }
 		void SetFontFamily(cbIFontFamily* FontFamily);

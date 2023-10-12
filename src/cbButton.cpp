@@ -41,6 +41,18 @@ namespace cbgui
 		, fOnUnhovered(nullptr)
 	{}
 
+	cbButton::cbButton(const cbButton& Other, cbSlot* NewOwner)
+		: Super(Other, NewOwner)
+		, Transform(Other.Transform)
+		, ButtonState(Other.ButtonState)
+		, VertexColorStyle(Other.VertexColorStyle)
+		, fOnClicked(nullptr)
+		, fOnPressed(nullptr)
+		, fOnReleased(nullptr)
+		, fOnHovered(nullptr)
+		, fOnUnhovered(nullptr)
+	{}
+
 	cbButton::~cbButton()
 	{
 		fOnClicked = nullptr;
@@ -48,6 +60,11 @@ namespace cbgui
 		fOnReleased = nullptr;
 		fOnHovered = nullptr;
 		fOnUnhovered = nullptr;
+	}
+
+	cbWidget::SharedPtr cbButton::CloneWidget(cbSlot* NewOwner)
+	{
+		return cbButton::Create(*this, NewOwner);
 	}
 
 	void cbButton::BeginPlay()

@@ -97,6 +97,26 @@ namespace cbgui
 		, bShouldNotifyCanvas(true)
 	{}
 
+	cbgui::cbWidget::cbWidget(const cbWidget& Widget, cbSlot* NewOwner)
+		: mVAlignment(Widget.mVAlignment)
+		, mHAlignment(Widget.mHAlignment)
+		, CanvasAnchor(Widget.CanvasAnchor)
+		, VerticalAnchor(Widget.VerticalAnchor)
+		, HorizontalAnchor(Widget.HorizontalAnchor)
+		, Owner(NewOwner ? NewOwner : Widget.Owner)
+		, Canvas(Widget.Canvas)
+		, bIsAlignedToCanvas(Widget.bIsAlignedToCanvas)
+		, bIsEnabled(Widget.bIsEnabled)
+		, Visibility(Widget.Visibility)
+		, bFocusable(Widget.bFocusable)
+		, bFocused(Widget.bFocused)
+		, FocusMode(Widget.FocusMode)
+		, ZOrderMode(Widget.ZOrderMode)
+		, ZOrder(Widget.ZOrder)
+		, Name(Widget.Name)
+		, bShouldNotifyCanvas(Widget.bShouldNotifyCanvas)
+	{}
+
 	cbWidget::~cbWidget()
 	{
 		Canvas = nullptr;

@@ -42,6 +42,21 @@ namespace cbgui
 		, bFillThickness(false)
 	{}
 
+	cbSlider::cbSliderHandleComponent::cbSliderHandleComponent(const cbSliderHandleComponent& eComponent, cbSlider* NewOwner)
+		: Super(NewOwner)
+		, Length(eComponent.Length)
+		, Thickness(eComponent.Thickness)
+		, ButtonState(eComponent.ButtonState)
+		, Offset(eComponent.Offset)
+		, bIsItFocused(eComponent.bIsItFocused)
+		, bFillMode(eComponent.bFillMode)
+		, Padding(eComponent.Padding)
+		, bFillThickness(eComponent.bFillThickness)
+		, VertexColorStyle(eComponent.VertexColorStyle)
+	{
+		SetName(eComponent.GetName());
+	}
+
 	cbSlider::cbSliderHandleComponent::~cbSliderHandleComponent()
 	{
 	}
@@ -394,14 +409,41 @@ namespace cbgui
 		, Thickness(2.5f)
 		, bHorizontalFill(false)
 		, bVerticalFill(false)
+		, fOnValueChanged(nullptr)
 	{
 		ChangeOrientation(Orientation);
+	}
+
+	cbgui::cbSlider::cbSlider(const cbSlider& Other, cbSlot* NewOwner)
+		: cbWidget(Other, NewOwner)
+		, Transform(Other.Transform)
+		, bIntegerOnly(Other.bIntegerOnly)
+		, Percent(Other.Percent)
+		, Orientation(Other.Orientation)
+		, Value(Other.Value)
+		, MinValue(Other.MinValue)
+		, MaxValue(Other.MaxValue)
+		, StepSize(Other.StepSize)
+		, bUseStepOnly(Other.bUseStepOnly)
+		, Handle(cbSliderHandleComponent::CreateUnique(*Other.Handle.get(), this))
+		, Thickness(Other.Thickness)
+		, bHorizontalFill(Other.bHorizontalFill)
+		, bVerticalFill(bVerticalFill)
+		, VertexColorStyle(Other.VertexColorStyle)
+		, fOnValueChanged(nullptr)
+	{
+		ChangeOrientation(Other.GetOrientation());
 	}
 
 	cbSlider::~cbSlider()
 	{
 		fOnValueChanged = nullptr;
 		Handle = nullptr;
+	}
+
+	cbWidget::SharedPtr cbSlider::CloneWidget(cbSlot* NewOwner)
+	{
+		return cbSlider::Create(*this);
 	}
 
 	void cbSlider::BeginPlay()

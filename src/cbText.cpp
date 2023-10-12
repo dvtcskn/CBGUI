@@ -43,9 +43,24 @@ namespace cbgui
 		SetFocusable(false);
 	}
 
+	cbText::cbText(const cbText& Other, cbSlot* NewOwner)
+		: cbWidget(Other, NewOwner)
+		, Transform(Other.Transform)
+		, LetterDrawCount(Other.LetterDrawCount)
+		, FontGeometryBuilder(Other.FontGeometryBuilder->CloneUnique(this))
+		, bIsItWrapped(Other.bIsItWrapped)
+	{
+		SetFocusable(Other.IsFocusable());
+	}
+
 	cbText::~cbText()
 	{
 		FontGeometryBuilder = nullptr;
+	}
+
+	cbWidget::SharedPtr cbText::CloneWidget(cbSlot* NewOwner)
+	{
+		return cbText::Create(*this);
 	}
 
 	void cbText::BeginPlay()

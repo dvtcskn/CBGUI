@@ -78,11 +78,33 @@ public:
 				SetSelectionVertexColorStyle(GetOwner<cbComboBoxList>()->GetOptionsVertexStyle());
 			}
 
+			cbComboBoxOptionSlot(const cbScrollBoxSlot& Widget, cbSlottedBox* NewOwner)
+				: Super(Widget, NewOwner)
+				, Option(nullptr)
+				, bIsPressed(false)
+				, bIsHovered(false)
+				, bIsSelected(false)
+				, Highlight(nullptr)
+			{
+				auto Overlay = static_cast<cbOverlay*>(GetContent());
+				Highlight = Overlay->GetSlot(0)->GetSharedContent<cbImage>();
+				Option = Overlay->GetSlot(1)->GetSharedContent();
+
+				Overlay->AttachToSlot(this);
+
+				SetSelectionVertexColorStyle(GetOwner<cbComboBoxList>()->GetOptionsVertexStyle());
+			}
+
 		public:
 			virtual ~cbComboBoxOptionSlot()
 			{
 				Option = nullptr;
 				Highlight = nullptr;
+			}
+
+			virtual cbSlot::SharedPtr CloneSlot(cbSlottedBox* NewOwner) override
+			{
+				return cbComboBoxOptionSlot::Create(*this, NewOwner);
 			}
 
 		public:
@@ -209,8 +231,29 @@ public:
 			SetZOrderMode(eZOrderMode::Latest);
 		}
 
+		cbComboBoxList(const cbComboBoxList& ComboBoxList, cbSlot* NewOwner = nullptr)
+			: Super(ComboBoxList, NewOwner)
+			, OptionsVertexStyle(ComboBoxList.OptionsVertexStyle)
+		{
+		}
+
 	public:
 		virtual ~cbComboBoxList() = default;
+
+		virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner) override
+		{
+			cbComboBoxList::SharedPtr ScrollBox = cbComboBoxList::Create(*this, NewOwner);
+
+			/*std::size_t SlotSize = GetSlotSize();
+			for (std::size_t i = 0; i < SlotSize; i++)
+			{
+				cbComboBoxOptionSlot::SharedPtr Slot = GetSlot(i)->Clone<cbComboBoxOptionSlot>(ScrollBox.get());
+				ScrollBox->Insert(Slot, i);
+			}
+
+			ScrollBox->Scroll(0.0f);*/
+			return ScrollBox;
+		}
 
 	public:
 		//virtual std::optional<cbBounds> GetScissorRect() const override final { return cbgui::GetScissorRect(GetDimension(), GetLocation(), GetRotation(), GetOrigin()); }
@@ -443,11 +486,28 @@ public:
 		Content->AttachToSlot(this);
 	}
 
+	cbComboBoxListSlot(const cbComboBoxListSlot& ComboBoxListSlot, cbSlottedBox* pOwner)
+		: Super(ComboBoxListSlot, pOwner)
+		, bIsInserted(false)
+		, Height(ComboBoxListSlot.Height)
+		, Location(ComboBoxListSlot.Location)
+	{
+		Content = ComboBoxListSlot.Content->Clone<cbOverlay>();
+		BG = Content->GetSlot(0)->GetSharedContent<cbImage>();
+		ComboBoxList = Content->GetSlot(1)->GetSharedContent<cbComboBoxList>();
+		Content->AttachToSlot(this);
+	}
+
 	virtual ~cbComboBoxListSlot()
 	{
 		BG = nullptr;
 		ComboBoxList = nullptr;
 		Content = nullptr;
+	}
+
+	virtual cbSlot::SharedPtr CloneSlot(cbSlottedBox* NewOwner) override
+	{
+		return cbComboBoxListSlot::Create(*this, NewOwner);
 	}
 
 	virtual bool IsInserted() const override final { return HasOwner() && bIsInserted; }
@@ -624,10 +684,28 @@ cbComboBox::cbComboBox(const cbgui::eOrientation InOrientation)
 	SetHorizontalAlignment(eHorizontalAlignment::Align_Center);
 }
 
+cbComboBox::cbComboBox(const cbComboBox& Widget, cbSlot* NewOwner)
+	: Super(Widget, NewOwner)
+	, Transform(Widget.Transform)
+	, Orientation(Widget.Orientation)
+	, bIsOpen(false)
+	, MenuSlot(Widget.MenuSlot->Clone<cbComboBoxMenuSlot>(this))
+	, ListSlot(Widget.ListSlot->Clone<cbComboBoxListSlot>(this))
+	, fOnSelectionChanged(Widget.fOnSelectionChanged)
+{
+	MenuSlot->Inserted();
+	ListSlot->Inserted();
+}
+
 cbComboBox::~cbComboBox()
 {
 	MenuSlot = nullptr;
 	ListSlot = nullptr;
+}
+
+cbWidget::SharedPtr cbComboBox::CloneWidget(cbSlot* NewOwner)
+{
+	return cbComboBox::Create(*this, NewOwner);
 }
 
 cbDimension cbComboBox::GetSlotDimension() const

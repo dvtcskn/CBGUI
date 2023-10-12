@@ -36,7 +36,11 @@ namespace cbgui
 		cbClassBody(cbClassConstructor, cbImage, cbWidget);
 	public:
 		cbImage();
+		cbImage(const cbImage& Other, cbSlot* NewOwner = nullptr);
+
 		virtual ~cbImage();
+
+		virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override;
 
 	private:
 		virtual void BeginPlay() override final;

@@ -93,9 +93,34 @@ namespace cbgui
 				}
 			}
 
+			cbFORCEINLINE cbHorizontalBoxSlot(const cbHorizontalBoxSlot& Widget, cbSlottedBox* NewOwner)
+				: Super(Widget, NewOwner)
+				, bIsInserted(false)
+				, Alignment(Widget.Alignment)
+				, Content(Widget.Content->CloneWidget())
+				, Location(Widget.Location)
+				, Dimension(Widget.Dimension)
+				, SlotWeight(Widget.SlotWeight)
+			{
+				if (Content)
+				{
+					UpdateVerticalDimension();
+					UpdateHorizontalDimension();
+					UpdateVerticalLocation();
+					UpdateHorizontalLocation();
+
+					Content->AttachToSlot(this);
+				}
+			}
+
 			virtual ~cbHorizontalBoxSlot()
 			{
 				Content = nullptr;
+			}
+
+			virtual cbSlot::SharedPtr CloneSlot(cbSlottedBox* NewOwner) override
+			{
+				return cbHorizontalBoxSlot::Create(*this, NewOwner);
 			}
 
 			virtual bool IsInserted() const override final { return HasOwner() && bIsInserted; }
@@ -157,6 +182,8 @@ namespace cbgui
 
 	public:
 		cbHorizontalBox();
+		cbHorizontalBox(const cbHorizontalBox& Other, cbSlot* NewOwner = nullptr);
+
 		virtual ~cbHorizontalBox()
 		{
 			for (auto& Slot : mSlots)
@@ -164,6 +191,8 @@ namespace cbgui
 			mSlots.clear();
 			slotsize = 0;
 		}
+
+		virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override;
 
 	public:
 		virtual cbVector GetLocation() const override final { return Transform.GetCenter(); }
@@ -324,6 +353,7 @@ namespace cbgui
 		/* If the index is valid, it will replace the contents of the slot. */
 		bool ReplaceSlotContent(std::size_t Index, const cbWidget::SharedPtr& New);
 
+		void RemoveSlots();
 		bool RemoveSlot(const std::size_t SlotIndex);
 	private:
 		/* Called when the Slot or Slot content requested Remove From Parent. */

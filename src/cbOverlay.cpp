@@ -52,6 +52,33 @@ namespace cbgui
 		SetHorizontalAlignment(eHorizontalAlignment::Align_Fill);
 	}
 
+	cbgui::cbOverlay::cbOverlay(const cbOverlay& Other, cbSlot* NewOwner)
+		: Super(Other, NewOwner)
+		, Transform(Other.Transform)
+		, slotsize(0)
+	{
+		std::size_t SlotSize = Other.GetSlotSize();
+		for (std::size_t i = 0; i < SlotSize; i++)
+		{
+			cbOverlaySlot::SharedPtr Slot = Other.GetSlot(i)->Clone<cbOverlaySlot>(this);
+			Insert(Slot, i);
+		}
+	}
+
+	cbWidget::SharedPtr cbOverlay::CloneWidget(cbSlot* NewOwner)
+	{
+		cbOverlay::SharedPtr Overlay = cbOverlay::Create(*this, NewOwner);
+
+		/*std::size_t SlotSize = GetSlotSize();
+		for (std::size_t i = 0; i < SlotSize; i++)
+		{
+			cbOverlaySlot::SharedPtr Slot = GetSlot(i)->Clone<cbOverlaySlot>(Overlay.get());
+			Overlay->Insert(Slot, i);
+		}*/
+
+		return Overlay;
+	}
+
 	void cbOverlay::SetXY(std::optional<float> X, std::optional<float> Y, bool Force)
 	{
 		if (X.has_value() && Y.has_value())
@@ -638,6 +665,25 @@ namespace cbgui
 		pSlot = nullptr;
 
 		return true;
+	}
+
+	void cbOverlay::RemoveSlots()
+	{
+		ResetInput();
+		std::size_t SlotSize = GetSlotSize();
+		std::vector<cbOverlaySlot::SharedPtr> SlotsToRemove;
+		for (std::size_t i = 0; i < SlotSize; i++)
+		{
+			SlotsToRemove.push_back(mSlots[i]);
+		}
+		for (std::size_t i = 0; i < SlotsToRemove.size(); i++)
+		{
+			cbSlot::SharedPtr Slot = SlotsToRemove[i];
+			auto Content = Slot->GetContent();
+			Content->RemoveFromParent();
+			Slot = nullptr;
+		}
+		SlotsToRemove.clear();
 	}
 
 	bool cbOverlay::RemoveSlot(const std::size_t SlotIndex)
