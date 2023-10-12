@@ -332,7 +332,7 @@ namespace cbgui
 
 	bool cbText::RemoveLastChar()
 	{
-		return RemoveChar(GetTextSize() - 1);
+		return GetTextSize() > 0 ? RemoveChar(GetTextSize() - 1) : false;
 	}
 
 	void cbText::SetFontType(const eFontType& FontType)
