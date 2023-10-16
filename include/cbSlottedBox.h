@@ -191,13 +191,13 @@ namespace cbgui
 		virtual bool IsInside(const cbVector& Location) const
 		{
 			if (GetRotation() != 0.0f)
-				return cbgui::IsInside(GetBounds(), Location, GetRotation(), GetOrigin());
+				return cbgui::IsInside(GetBounds(), Location, GetRotation(), GetRotatorOrigin());
 			return cbgui::IsInside(GetBounds(), Location);
 		}
 		virtual bool Intersect(const cbBounds& Other) const
 		{
 			if (GetRotation() != 0.0f)
-				return cbgui::Intersect(GetBounds(), Other, GetRotation(), GetOrigin());
+				return cbgui::Intersect(GetBounds(), Other, GetRotation(), GetRotatorOrigin());
 			return cbgui::Intersect(GetBounds(), Other);
 		}
 

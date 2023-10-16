@@ -434,7 +434,7 @@ protected:
 			std::size_t VerticesSize = Vertices.size();
 
 			auto Rotation = GetRotation();
-			auto Origin = GetRotation() != 0.0f ? GetOrigin() : cbVector::Zero();
+			auto Origin = GetRotation() != 0.0f ? GetRotatorOrigin() : cbVector::Zero();
 
 			for (std::size_t i = 0; i < VerticesSize; i++)
 			{

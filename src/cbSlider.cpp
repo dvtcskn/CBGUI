@@ -207,7 +207,7 @@ namespace cbgui
 			return false;
 
 		if (IsPressed())
-			GetOwner<cbSlider>()->Slide(cbgui::RotateVectorAroundPoint((Mouse.MouseLocation), GetOrigin(), GetRotation() * (-1.0f)));
+			GetOwner<cbSlider>()->Slide(cbgui::RotateVectorAroundPoint((Mouse.MouseLocation), GetRotatorOrigin(), GetRotation() * (-1.0f)));
 		return true;
 	}
 
@@ -1104,7 +1104,7 @@ namespace cbgui
 		}
 		else if (IsInside(Mouse.MouseLocation))
 		{
-			Slide(cbgui::RotateVectorAroundPoint((Mouse.MouseLocation), GetOrigin(), GetRotation() * (-1.0f)));
+			Slide(cbgui::RotateVectorAroundPoint((Mouse.MouseLocation), GetRotatorOrigin(), GetRotation() * (-1.0f)));
 			if (Handle->IsInside(Mouse.MouseLocation))
 			{
 				if (Handle->OnMouseEnter(Mouse))
@@ -1146,7 +1146,7 @@ namespace cbgui
 		}
 		else if (IsInside(Mouse.MouseLocation))
 		{
-			Slide(cbgui::RotateVectorAroundPoint((Mouse.MouseLocation), GetOrigin(), GetRotation() * (-1.0f)));
+			Slide(cbgui::RotateVectorAroundPoint((Mouse.MouseLocation), GetRotatorOrigin(), GetRotation() * (-1.0f)));
 			if (Handle->IsInside(Mouse.MouseLocation))
 			{
 				if (Handle->OnMouseEnter(Mouse))

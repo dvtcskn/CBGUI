@@ -366,7 +366,7 @@ namespace cbgui
 
 	void cbScrollBox::cbScrollBarComponent::cbScrollBarHandleComponent::SetMouseOffset(cbVector Location)
 	{
-		mouseOffset = cbgui::RotateVectorAroundPoint(Location, GetOrigin(), GetRotation() * (-1.0f)) - GetBounds().GetCenter();
+		mouseOffset = cbgui::RotateVectorAroundPoint(Location, GetRotatorOrigin(), GetRotation() * (-1.0f)) - GetBounds().GetCenter();
 	}
 
 	bool cbScrollBox::cbScrollBarComponent::cbScrollBarHandleComponent::OnMouseEnter(const cbMouseInput& Mouse)
@@ -690,7 +690,7 @@ namespace cbgui
 
 	void cbScrollBox::cbScrollBarComponent::Scroll(const cbVector& InMouseLocation, std::optional<cbVector> MouseOffset)
 	{
-		Handle->Slide(cbgui::RotateVectorAroundPoint((InMouseLocation), GetOrigin(), GetRotation() * (-1.0f)));
+		Handle->Slide(cbgui::RotateVectorAroundPoint((InMouseLocation), GetRotatorOrigin(), GetRotation() * (-1.0f)));
 	}
 
 	void cbScrollBox::cbScrollBarComponent::ScrollWheel(float WheelDelta)

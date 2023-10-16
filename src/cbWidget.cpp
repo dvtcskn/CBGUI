@@ -258,12 +258,12 @@ namespace cbgui
 
 	bool cbWidget::IsInside(const cbVector& Location) const
 	{
-		return IsRotated() ? cbgui::IsInside(GetBounds(), Location, GetRotation(), GetOrigin()) : cbgui::IsInside(GetBounds(), Location);
+		return IsRotated() ? cbgui::IsInside(GetBounds(), Location, GetRotation(), GetRotatorOrigin()) : cbgui::IsInside(GetBounds(), Location);
 	}
 
 	bool cbWidget::Intersect(const cbBounds& Other) const
 	{
-		return IsRotated() ? cbgui::Intersect(GetBounds(), Other, GetRotation(), GetOrigin()) : cbgui::Intersect(GetBounds(), Other);
+		return IsRotated() ? cbgui::Intersect(GetBounds(), Other, GetRotation(), GetRotatorOrigin()) : cbgui::Intersect(GetBounds(), Other);
 	}
 
 	bool cbWidget::IsItCulled() const

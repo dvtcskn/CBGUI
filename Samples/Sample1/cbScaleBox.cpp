@@ -232,7 +232,7 @@ namespace cbgui
 			const float Rotation = GetRotation();
 			if (Rotation == 0.0f)
 				return cbgui::IsInside(cbBounds(GetDimension() + Scaler, Transform.GetCenter()), Location);
-			return cbgui::IsInside(cbBounds(GetDimension() + Scaler, Transform.GetCenter()), Location, Rotation, GetOrigin());
+			return cbgui::IsInside(cbBounds(GetDimension() + Scaler, Transform.GetCenter()), Location, Rotation, GetRotatorOrigin());
 		}
 		return Super::IsInside(Location);
 	}
