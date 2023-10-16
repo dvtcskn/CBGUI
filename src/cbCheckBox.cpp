@@ -72,6 +72,11 @@ namespace cbgui
 		OnTick(DeltaTime);
 	}
 
+	float cbCheckBox::GetRotation() const
+	{
+		return HasOwner() ? GetOwner()->GetRotation() + Transform.GetRotation() : Transform.GetRotation();
+	}
+
 	void cbCheckBox::SetXY(std::optional<float> X, std::optional<float> Y, bool Force)
 	{
 		if (X.has_value() && Y.has_value())
@@ -307,13 +312,6 @@ namespace cbgui
 
 	void cbCheckBox::UpdateRotation()
 	{
-		if (HasOwner())
-			Transform.SetRollOffset(GetOwner()->GetRotation());
-		else if (IsAlignedToCanvas())
-			Transform.SetRollOffset(GetCanvas()->GetScreenRotation());
-		else
-			Transform.SetRollOffset(0.0f);
-
 		NotifyCanvas_WidgetUpdated();
 	}
 

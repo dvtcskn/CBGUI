@@ -986,6 +986,11 @@ namespace cbgui
 		return ScrollBox;
 	}
 
+	float cbScrollBox::GetRotation() const
+	{
+		return HasOwner() ? GetOwner()->GetRotation() + Transform.GetRotation() : Transform.GetRotation();
+	}
+
 	void cbScrollBox::SetXY(std::optional<float> X, std::optional<float> Y, bool Force)
 	{
 		if (X.has_value() && Y.has_value())
@@ -1858,12 +1863,6 @@ namespace cbgui
 
 	void cbScrollBox::UpdateRotation()
 	{
-		if (HasOwner())
-			Transform.SetRollOffset(GetOwner()->GetRotation());
-		else if (IsAlignedToCanvas())
-			Transform.SetRollOffset(GetCanvas()->GetScreenRotation());
-		else
-			Transform.SetRollOffset(0.0f);
 		ScrollBar->UpdateRotation();
 		NotifyCanvas_WidgetUpdated();
 

@@ -369,7 +369,7 @@ public:
 	void HideMenuButton(bool Var);
 
 	virtual cbVector GetLocation() const override final { return Transform.GetCenter(); }
-	virtual float GetRotation() const override final { return Transform.GetRotation(); }
+	virtual float GetRotation() const override final;
 	virtual cbBounds GetBounds() const override final { return Transform.GetBounds(); }
 	virtual cbMargin GetPadding() const override final { return Transform.GetPadding(); }
 	virtual cbDimension GetDimension() const override final { return Transform.GetDimension(); }

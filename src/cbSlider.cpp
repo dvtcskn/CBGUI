@@ -461,6 +461,11 @@ namespace cbgui
 		OnTick(InDeltaTime);
 	}
 
+	float cbSlider::GetRotation() const
+	{
+		return HasOwner() ? GetOwner()->GetRotation() + Transform.GetRotation() : Transform.GetRotation();
+	}
+
 	void cbSlider::UpdateStatus()
 	{
 		SetFocus(false);
@@ -684,13 +689,6 @@ namespace cbgui
 
 	void cbSlider::UpdateRotation()
 	{
-		if (HasOwner())
-			Transform.SetRollOffset(GetOwner()->GetRotation());
-		else if (IsAlignedToCanvas())
-			Transform.SetRollOffset(GetCanvas()->GetScreenRotation());
-		else
-			Transform.SetRollOffset(0.0f);
-
 		Handle->UpdateRotation();
 		NotifyCanvas_WidgetUpdated();
 	}

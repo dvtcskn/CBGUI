@@ -237,6 +237,7 @@ namespace cbgui
 		/* Returns owner origin. */
 		virtual cbVector GetOrigin() const override final;
 		/* Returns owner rotation. */
+		virtual bool IsRotated() const override final;
 		virtual float GetRotation() const override final;
 
 		virtual bool IsEnabled() const override final;

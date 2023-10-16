@@ -128,6 +128,11 @@ cbWidget::SharedPtr cbTextBox::CloneWidget(cbSlot* NewOwner)
 	return cbTextBox::Create(*this, NewOwner);
 }
 
+float cbTextBox::GetRotation() const
+{
+	return HasOwner() ? GetOwner()->GetRotation() + Transform.GetRotation() : Transform.GetRotation();
+}
+
 void cbTextBox::SetXY(std::optional<float> X, std::optional<float> Y, bool Force)
 {
 	if (X.has_value() && Y.has_value())
@@ -1407,13 +1412,6 @@ void cbTextBox::UpdateHorizontalAlignment(const bool ForceAlign)
 
 void cbTextBox::UpdateRotation()
 {
-	if (HasOwner())
-		Transform.SetRollOffset(GetOwner()->GetRotation());
-	else if (IsAlignedToCanvas())
-		Transform.SetRollOffset(GetCanvas()->GetScreenRotation());
-	else
-		Transform.SetRollOffset(0.0f);
-
 	if (TextSlot)
 		TextSlot->UpdateRotation();
 	if (Cursor)

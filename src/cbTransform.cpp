@@ -196,7 +196,6 @@ namespace cbgui
 	void cbTransform::ResetRotation()
 	{
 		Rotation = 0.0f;
-		RotationOffset = 0.0f;
 	}
 
 	bool cbTransform::Rotate2D(const float Roll)
@@ -207,16 +206,6 @@ namespace cbgui
 			return true;
 		}
 		return true;
-	}
-
-	bool cbTransform::SetRollOffset(const float value)
-	{
-		if (RotationOffset != value)
-		{
-			RotationOffset = value;
-			return true;
-		}
-		return false;
 	}
 
 	bool cbTransform::Align(const eHorizontalAlignment HorizontalAlignment, const cbBounds BoundsToAlign, const eAnchors Anchor)

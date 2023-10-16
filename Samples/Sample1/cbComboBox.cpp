@@ -963,13 +963,6 @@ void cbComboBox::UpdateStatus()
 
 void cbComboBox::UpdateRotation()
 {
-	if (HasOwner())
-		Transform.SetRollOffset(GetOwner()->GetRotation());
-	else if (IsAlignedToCanvas())
-		Transform.SetRollOffset(GetCanvas()->GetScreenRotation());
-	else
-		Transform.SetRollOffset(0.0f);
-
 	SetIsMenuOpen(false);
 	MenuSlot->UpdateRotation();
 	ListSlot->UpdateRotation();
@@ -1257,6 +1250,11 @@ void cbComboBox::SelectSlot(cbSlot* Slot, cbWidget* Option)
 void cbComboBox::HideMenuButton(bool Var)
 {
 	MenuSlot->HideMenuButton(Var);
+}
+
+float cbComboBox::GetRotation() const
+{
+	return HasOwner() ? GetOwner()->GetRotation() + Transform.GetRotation() : Transform.GetRotation();
 }
 
 bool cbComboBox::SelectItem(const std::size_t Index)

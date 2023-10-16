@@ -64,7 +64,7 @@ namespace cbgui
 	public:
 		virtual cbVector GetLocation() const override final { return Transform.GetCenter(); }
 		virtual cbBounds GetBounds() const override final { return Transform.GetBounds(); }
-		virtual float GetRotation() const override final { return Transform.GetRotation(); }
+		virtual float GetRotation() const override final;
 		virtual cbMargin GetPadding() const override final { return Transform.GetPadding(); }
 		virtual cbDimension GetDimension() const override final { return Transform.GetDimension(); }
 		virtual float GetWidth() const override final { return Transform.GetWidth(); }

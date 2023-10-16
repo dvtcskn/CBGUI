@@ -76,6 +76,11 @@ namespace cbgui
 		OnTick(DeltaTime);
 	}
 
+	float cbText::GetRotation() const
+	{
+		return HasOwner() ? GetOwner()->GetRotation() + Transform.GetRotation() : Transform.GetRotation();
+	}
+
 	const cbIFontFamily* cbText::GetFontFamily() const
 	{
 		return FontGeometryBuilder->GetFontFamily();
@@ -894,13 +899,6 @@ namespace cbgui
 
 	void cbText::UpdateRotation()
 	{
-		if (HasOwner())
-			Transform.SetRollOffset(GetOwner()->GetRotation());
-		else if (IsAlignedToCanvas())
-			Transform.SetRollOffset(GetCanvas()->GetScreenRotation());
-		else
-			Transform.SetRollOffset(0.0f);
-
 		NotifyCanvas_WidgetUpdated();
 	}
 

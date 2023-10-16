@@ -91,6 +91,14 @@ namespace cbgui
 			return Owner->GetOrigin();
 		return cbVector();
 	}
+
+	bool cbSlot::IsRotated() const
+	{
+		if (IsInserted())
+			return Owner->IsRotated();
+		return false;
+	}
+
 	float cbSlot::GetRotation() const
 	{
 		if (IsInserted())

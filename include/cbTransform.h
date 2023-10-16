@@ -43,7 +43,6 @@ namespace cbgui
 		cbVector Location;
 		cbVector LocationOffset;
 		float Rotation;
-		float RotationOffset;
 		cbMargin Padding;
 
 		std::optional<float> WidthAlignment;
@@ -57,7 +56,6 @@ namespace cbgui
 			, Location(cbVector::Zero())
 			, LocationOffset(cbVector::Zero())
 			, Rotation(0.0f)
-			, RotationOffset(0.0f)
 			, Padding(cbMargin())
 			, WidthAlignment(std::nullopt)
 			, HeightAlignment(std::nullopt)
@@ -131,9 +129,8 @@ namespace cbgui
 		void ResetWidthCompressed();
 		void ResetHeightCompressed();
 
-		inline constexpr float GetRotation() const { return Rotation + RotationOffset; }
+		inline constexpr float GetRotation() const { return Rotation; }
 		bool Rotate2D(const float Roll);
-		bool SetRollOffset(const float value);
 		void ResetRotation();
 
 		inline constexpr cbMargin GetPadding() const { return Padding; }

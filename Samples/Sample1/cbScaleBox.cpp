@@ -81,6 +81,11 @@ namespace cbgui
 		return cbScaleBox::Create(*this, NewOwner);
 	}
 
+	float cbScaleBox::GetRotation() const
+	{
+		return HasOwner() ? GetOwner()->GetRotation() + Transform.GetRotation() : Transform.GetRotation();
+	}
+
 	void cbScaleBox::SetXY(std::optional<float> X, std::optional<float> Y, bool Force)
 	{
 		if (X.has_value() && Y.has_value())
@@ -563,13 +568,6 @@ namespace cbgui
 
 	void cbScaleBox::UpdateRotation()
 	{
-		if (HasOwner())
-			Transform.SetRollOffset(GetOwner()->GetRotation());
-		else if (IsAlignedToCanvas())
-			Transform.SetRollOffset(GetCanvas()->GetScreenRotation());
-		else
-			Transform.SetRollOffset(0.0f);
-
 		if (Slot)
 			Slot->UpdateRotation();
 		NotifyCanvas_WidgetUpdated();

@@ -64,6 +64,7 @@ namespace cbgui
 		virtual cbVector GetLocation() const = 0;
 		/* 2D Rotation. Requires Stencil Clipping during rendering, */
 		virtual float GetRotation() const = 0;
+		virtual bool IsRotated() const = 0;
 		/* Returns Aligned/Wrapped dimension of the Widget */
 		virtual cbDimension GetDimension() const = 0;
 		/* Return Aligned/Wrapped width of the Widget */
@@ -163,7 +164,7 @@ namespace cbgui
 		void SetWidth(const float Width) { SetWidthHeight(Width, std::nullopt); }
 		void SetHeight(const float Height) { SetWidthHeight(std::nullopt, Height); }
 
-		bool IsRotated() const { return GetRotation() != 0.0f; }
+		virtual bool IsRotated() const override { return HasOwner() ? GetOwner()->IsRotated() || GetRotation() != 0.0f : GetRotation() != 0.0f; }
 		/* 2D Rotation. Requires Stencil Clipping during rendering, */
 		virtual void SetRotation(const float Rotation) = 0;
 

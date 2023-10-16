@@ -128,6 +128,7 @@ namespace cbgui
 		virtual float GetHeight() const override { return GetDimension().GetHeight(); }
 		
 		virtual cbVector GetOrigin() const override { return Owner->GetOrigin(); }
+		virtual bool IsRotated() const override { return Owner->IsRotated(); }
 		virtual float GetRotation() const override { return IsItAttachedToComponent() ? ComponentOwner->GetRotation() : Owner->GetRotation(); }
 
 		/* Resets the focus and input state. */

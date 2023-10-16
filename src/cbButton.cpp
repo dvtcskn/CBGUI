@@ -80,6 +80,11 @@ namespace cbgui
 		OnTick(InDeltaTime);
 	}
 
+	float cbButton::GetRotation() const
+	{
+		return HasOwner() ? GetOwner()->GetRotation() + Transform.GetRotation() : Transform.GetRotation();
+	}
+
 	std::vector<cbGeometryVertexData> cbButton::GetVertexData(const bool LineGeometry) const
 	{
 		if (LineGeometry)
@@ -547,12 +552,6 @@ namespace cbgui
 
 	void cbButton::UpdateRotation()
 	{
-		if (HasOwner())
-			Transform.SetRollOffset(GetOwner()->GetRotation());
-		else if (IsAlignedToCanvas())
-			Transform.SetRollOffset(GetCanvas()->GetScreenRotation());
-		else
-			Transform.SetRollOffset(0.0f);
 		NotifyCanvas_WidgetUpdated();
 	}
 
