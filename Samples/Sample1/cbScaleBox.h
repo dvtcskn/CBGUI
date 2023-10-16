@@ -111,11 +111,11 @@ namespace cbgui
 
 	public:
 		cbScaleBox();
-		cbScaleBox(const cbScaleBox& Widget, cbSlot* NewOwner);
+		cbScaleBox(const cbScaleBox& Widget);
 	public:
 		virtual ~cbScaleBox();
 
-		virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override;
+		virtual cbWidget::SharedPtr CloneWidget() override;
 
 	public:
 		virtual cbVector GetLocation() const override final { return Transform.GetCenter(); }

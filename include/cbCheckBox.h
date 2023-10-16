@@ -47,10 +47,10 @@ namespace cbgui
 
 	public:
 		cbCheckBox();
-		cbCheckBox(const cbCheckBox& Other, cbSlot* NewOwner = nullptr);
+		cbCheckBox(const cbCheckBox& Other);
 		virtual ~cbCheckBox();
 
-		virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override;
+		virtual cbWidget::SharedPtr CloneWidget() override;
 
 	private:
 		virtual void BeginPlay() override final;

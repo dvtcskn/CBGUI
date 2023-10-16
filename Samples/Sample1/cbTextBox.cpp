@@ -100,8 +100,8 @@ cbTextBox::cbTextBox(const std::u32string& Text, const cbTextDesc& TextDesc)
 	TextSlot->Inserted();
 }
 
-cbTextBox::cbTextBox(const cbTextBox& TextBox, cbSlot* NewOwner)
-	: Super(TextBox, NewOwner)
+cbTextBox::cbTextBox(const cbTextBox& TextBox)
+	: Super(TextBox)
 	, Transform(TextBox.Transform)
 	, TextSlot(nullptr)
 	, SelectedIndex(TextBox.SelectedIndex)
@@ -123,9 +123,9 @@ cbTextBox::~cbTextBox()
 	Highlight = nullptr;
 }
 
-cbWidget::SharedPtr cbTextBox::CloneWidget(cbSlot* NewOwner)
+cbWidget::SharedPtr cbTextBox::CloneWidget()
 {
-	return cbTextBox::Create(*this, NewOwner);
+	return cbTextBox::Create(*this);
 }
 
 float cbTextBox::GetRotation() const

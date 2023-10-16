@@ -49,8 +49,8 @@ namespace cbgui
 		, Slot(nullptr)
 	{}
 
-	cbBorder::cbBorder(const cbBorder& Widget, cbSlot* NewOwner)
-		: Super(Widget, NewOwner)
+	cbBorder::cbBorder(const cbBorder& Widget)
+		: Super(Widget)
 		, Transform(Widget.Transform)
 		, BorderThickness(Widget.BorderThickness)
 		, Slot(nullptr)
@@ -67,9 +67,9 @@ namespace cbgui
 		Slot = nullptr;
 	}
 
-	cbWidget::SharedPtr cbBorder::CloneWidget(cbSlot* NewOwner)
+	cbWidget::SharedPtr cbBorder::CloneWidget()
 	{
-		cbBorder::SharedPtr Border = cbBorder::Create(*this, NewOwner);
+		cbBorder::SharedPtr Border = cbBorder::Create(*this);
 		//Border->SetSlot(Slot->Clone<cbBorderSlot>(Border.get()));
 		return Border;
 	}
@@ -298,9 +298,13 @@ namespace cbgui
 				GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 		}
 
+		cbColor Color = IsEnabled() ? VertexColorStyle.Color : VertexColorStyle.GetDisabledColor();
+		auto Alpha = GetVertexColorAlpha();
+		if (Alpha.has_value())
+			Color.A = *Alpha;
+
 		return cbGeometryFactory::GetAlignedVertexData(cbGeometryFactory::GenerateBorderVertices(Transform.GetDimension(), BorderThickness), 
-			   cbGeometryFactory::GenerateBorderTextureCoordinate(), 
-			   IsEnabled() ? VertexColorStyle.Color : VertexColorStyle.GetDisabledColor(),
+			   cbGeometryFactory::GenerateBorderTextureCoordinate(), Color,
 			   GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 	}
 
@@ -376,6 +380,10 @@ namespace cbgui
 
 			if (cbICanvas* Canvas = GetCanvas())
 				Canvas->SlotContentReplaced(Slot.get(), Old.get(), Content.get());
+
+			auto Alpha = GetVertexColorAlpha();
+			if (Alpha.has_value())
+				Slot->SetVertexColorAlpha(Alpha);
 		}
 	}
 
@@ -397,6 +405,10 @@ namespace cbgui
 
 		Slot->UpdateRotation();
 		Slot->UpdateStatus();
+
+		auto Alpha = GetVertexColorAlpha();
+		if (Alpha.has_value())
+			Slot->SetVertexColorAlpha(Alpha);
 	}
 
 	std::size_t cbBorder::GetSlotSize(const bool ExcludeHidden) const

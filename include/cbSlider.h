@@ -130,11 +130,11 @@ namespace cbgui
 
 	public:
 		cbSlider(eOrientation orientation = eOrientation::Horizontal);
-		cbSlider(const cbSlider& Other, cbSlot* NewOwner = nullptr);
+		cbSlider(const cbSlider& Other);
 
 		virtual ~cbSlider();
 
-		virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override;
+		virtual cbWidget::SharedPtr CloneWidget() override;
 
 	private:
 		virtual void BeginPlay() override final;

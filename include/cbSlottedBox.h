@@ -42,8 +42,8 @@ namespace cbgui
 			, bIsItWrapped(false)
 		{}
 
-		cbSlottedBox(const cbSlottedBox& Widget, cbSlot* NewOwner = nullptr)
-			: cbWidget(Widget, NewOwner)
+		cbSlottedBox(const cbSlottedBox& Widget)
+			: cbWidget(Widget)
 			, bIsItWrapped(Widget.bIsItWrapped)
 		{}
 
@@ -233,6 +233,9 @@ namespace cbgui
 		virtual void ReplaceContent(const cbWidget::SharedPtr& Content) = 0;
 
 		void RemoveFromParent();
+
+		virtual void SetVertexColorAlpha(std::optional<float> Alpha, bool PropagateToChildren = true) override final;
+		virtual std::optional<float> GetVertexColorAlpha() const override final;
 
 		/* Returns owner origin. */
 		virtual cbVector GetOrigin() const override final;

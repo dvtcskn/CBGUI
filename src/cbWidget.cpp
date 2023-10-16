@@ -94,16 +94,17 @@ namespace cbgui
 		, ZOrderMode(eZOrderMode::InOrder)
 		, ZOrder(0)
 		, Name(std::nullopt)
+		, VertexColorAlpha(std::nullopt)
 		, bShouldNotifyCanvas(true)
 	{}
 
-	cbgui::cbWidget::cbWidget(const cbWidget& Widget, cbSlot* NewOwner)
+	cbgui::cbWidget::cbWidget(const cbWidget& Widget)
 		: mVAlignment(Widget.mVAlignment)
 		, mHAlignment(Widget.mHAlignment)
 		, CanvasAnchor(Widget.CanvasAnchor)
 		, VerticalAnchor(Widget.VerticalAnchor)
 		, HorizontalAnchor(Widget.HorizontalAnchor)
-		, Owner(NewOwner)
+		, Owner(nullptr)
 		, Canvas(Widget.Canvas)
 		, bIsAlignedToCanvas(Widget.bIsAlignedToCanvas)
 		, bIsEnabled(Widget.bIsEnabled)
@@ -114,6 +115,7 @@ namespace cbgui
 		, ZOrderMode(Widget.ZOrderMode)
 		, ZOrder(Widget.ZOrder)
 		, Name(Widget.Name)
+		, VertexColorAlpha(std::nullopt)
 		, bShouldNotifyCanvas(Widget.bShouldNotifyCanvas)
 	{}
 
@@ -227,6 +229,31 @@ namespace cbgui
 	std::int32_t cbWidget::GetZOrder() const
 	{
 		return Owner ? Owner->GetZOrder() + ZOrder : ZOrder;
+	}
+
+	void cbWidget::SetVertexColorAlpha(std::optional<float> Alpha, bool PropagateToChildren)
+	{
+		VertexColorAlpha = Alpha;
+
+		auto Components = GetAllComponents();
+		for (const auto& Component : Components)
+			Component->SetVertexColorAlpha(VertexColorAlpha, PropagateToChildren);
+
+		if (PropagateToChildren)
+		{
+			auto Children = GetAllChildren();
+
+			for (const auto& Child : Children)
+				Child->SetVertexColorAlpha(VertexColorAlpha, PropagateToChildren);
+		}
+
+		if (HasGeometry())
+			NotifyCanvas_WidgetUpdated();
+	}
+
+	std::optional<float> cbWidget::GetVertexColorAlpha() const
+	{
+		return VertexColorAlpha;
 	}
 
 	bool cbWidget::IsInside(const cbVector& Location) const
@@ -389,6 +416,9 @@ namespace cbgui
 
 	void cbWidget::AttachToSlot(cbSlot* Parent)
 	{
+		if (!Parent)
+			return;
+
 		if (Owner == Parent)
 			return;
 
@@ -405,6 +435,8 @@ namespace cbgui
 		{
 			ResetInput();
 		}
+
+		//SetVertexColorAlpha(std::nullopt);
 
 		Owner = Parent;
 
@@ -435,6 +467,8 @@ namespace cbgui
 		cbICanvas* pCanvas = nullptr;
 		if (KeepItOnTheCanvas)
 			pCanvas = GetCanvas();
+
+		SetVertexColorAlpha(std::nullopt);
 
 		auto pOwner = Owner;
 		Owner = nullptr;

@@ -231,8 +231,8 @@ public:
 			SetZOrderMode(eZOrderMode::Latest);
 		}
 
-		cbComboBoxList(const cbComboBoxList& ComboBoxList, cbSlot* NewOwner = nullptr)
-			: Super(ComboBoxList, NewOwner)
+		cbComboBoxList(const cbComboBoxList& ComboBoxList)
+			: Super(ComboBoxList)
 			, OptionsVertexStyle(ComboBoxList.OptionsVertexStyle)
 		{
 		}
@@ -240,9 +240,9 @@ public:
 	public:
 		virtual ~cbComboBoxList() = default;
 
-		virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner) override
+		virtual cbWidget::SharedPtr CloneWidget() override
 		{
-			cbComboBoxList::SharedPtr ScrollBox = cbComboBoxList::Create(*this, NewOwner);
+			cbComboBoxList::SharedPtr ScrollBox = cbComboBoxList::Create(*this);
 
 			/*std::size_t SlotSize = GetSlotSize();
 			for (std::size_t i = 0; i < SlotSize; i++)
@@ -684,8 +684,8 @@ cbComboBox::cbComboBox(const cbgui::eOrientation InOrientation)
 	SetHorizontalAlignment(eHorizontalAlignment::Align_Center);
 }
 
-cbComboBox::cbComboBox(const cbComboBox& Widget, cbSlot* NewOwner)
-	: Super(Widget, NewOwner)
+cbComboBox::cbComboBox(const cbComboBox& Widget)
+	: Super(Widget)
 	, Transform(Widget.Transform)
 	, Orientation(Widget.Orientation)
 	, bIsOpen(false)
@@ -703,9 +703,9 @@ cbComboBox::~cbComboBox()
 	ListSlot = nullptr;
 }
 
-cbWidget::SharedPtr cbComboBox::CloneWidget(cbSlot* NewOwner)
+cbWidget::SharedPtr cbComboBox::CloneWidget()
 {
-	return cbComboBox::Create(*this, NewOwner);
+	return cbComboBox::Create(*this);
 }
 
 cbDimension cbComboBox::GetSlotDimension() const

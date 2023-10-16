@@ -52,8 +52,8 @@ namespace cbgui
 		, MaximumHeight(std::nullopt)
 	{}
 
-	cbgui::cbSizeBox::cbSizeBox(const cbSizeBox& Other, cbSlot* NewOwner)
-		: Super(Other, NewOwner)
+	cbgui::cbSizeBox::cbSizeBox(const cbSizeBox& Other)
+		: Super(Other)
 		, Transform(Other.Transform)
 		, Slot(nullptr)
 		, MinimumWidth(Other.MinimumWidth)
@@ -70,9 +70,9 @@ namespace cbgui
 		Slot = nullptr;
 	}
 
-	cbWidget::SharedPtr cbSizeBox::CloneWidget(cbSlot* NewOwner)
+	cbWidget::SharedPtr cbSizeBox::CloneWidget()
 	{
-		cbSizeBox::SharedPtr SizeBox = cbSizeBox::Create(*this, NewOwner);
+		cbSizeBox::SharedPtr SizeBox = cbSizeBox::Create(*this);
 		//SizeBox->SetSlot(Slot->Clone<cbSizeBoxSlot>(SizeBox.get()));
 		return SizeBox;
 	}
@@ -414,6 +414,10 @@ namespace cbgui
 
 			if (cbICanvas* Canvas = GetCanvas())
 				Canvas->SlotContentReplaced(Slot.get(), Old.get(), Content.get());
+
+			auto Alpha = GetVertexColorAlpha();
+			if (Alpha.has_value())
+				Slot->SetVertexColorAlpha(Alpha);
 		}
 	}
 
@@ -435,6 +439,10 @@ namespace cbgui
 
 		Slot->UpdateRotation();
 		Slot->UpdateStatus();
+
+		auto Alpha = GetVertexColorAlpha();
+		if (Alpha.has_value())
+			Slot->SetVertexColorAlpha(Alpha);
 	}
 
 	void cbSizeBox::UpdateVerticalAlignment(const bool ForceAlign)

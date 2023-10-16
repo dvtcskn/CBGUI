@@ -361,9 +361,13 @@ namespace cbgui
 				GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 		}
 
+		cbColor Color = IsEnabled() ? VertexColorStyle.GetColor(ButtonState) : VertexColorStyle.GetDisabledColor();
+		auto Alpha = GetVertexColorAlpha();
+		if (Alpha.has_value())
+			Color.A = *Alpha;
+
 		return cbGeometryFactory::GetAlignedVertexData(cbGeometryFactory::Create4DPlaneVerticesFromRect(GetDimension()),
-			cbGeometryFactory::GeneratePlaneTextureCoordinate(),
-			IsEnabled() ? VertexColorStyle.GetColor(ButtonState) : VertexColorStyle.GetDisabledColor(),
+			cbGeometryFactory::GeneratePlaneTextureCoordinate(), Color,
 			GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 	}
 
@@ -415,8 +419,8 @@ namespace cbgui
 		ChangeOrientation(Orientation);
 	}
 
-	cbgui::cbSlider::cbSlider(const cbSlider& Other, cbSlot* NewOwner)
-		: cbWidget(Other, NewOwner)
+	cbgui::cbSlider::cbSlider(const cbSlider& Other)
+		: cbWidget(Other)
 		, Transform(Other.Transform)
 		, bIntegerOnly(Other.bIntegerOnly)
 		, Percent(Other.Percent)
@@ -442,7 +446,7 @@ namespace cbgui
 		Handle = nullptr;
 	}
 
-	cbWidget::SharedPtr cbSlider::CloneWidget(cbSlot* NewOwner)
+	cbWidget::SharedPtr cbSlider::CloneWidget()
 	{
 		return cbSlider::Create(*this);
 	}
@@ -852,10 +856,14 @@ namespace cbgui
 				GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 		}
 
+		cbColor Color = IsEnabled() ? VertexColorStyle.GetColor() : VertexColorStyle.GetDisabledColor();
+		auto Alpha = GetVertexColorAlpha();
+		if (Alpha.has_value())
+			Color.A = *Alpha;
+
 		return cbGeometryFactory::GetAlignedVertexData(cbGeometryFactory::Create4DPlaneVerticesFromRect(GetOrientation() == eOrientation::Vertical ?
 														cbDimension(GetBarThickness(), GetBarLength()) : cbDimension(GetBarLength(), GetBarThickness())),
-			cbGeometryFactory::GeneratePlaneTextureCoordinate(),
-			IsEnabled() ? VertexColorStyle.GetColor() : VertexColorStyle.GetDisabledColor(),
+			cbGeometryFactory::GeneratePlaneTextureCoordinate(), Color,
 			GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 	}
 

@@ -37,8 +37,8 @@ namespace cbgui
 		SetFocusable(false);
 	}
 
-	cbgui::cbImage::cbImage(const cbImage& Other, cbSlot* NewOwner)
-		: cbWidget(Other, NewOwner)
+	cbgui::cbImage::cbImage(const cbImage& Other)
+		: cbWidget(Other)
 		, Transform(Other.Transform)
 		, VertexColorStyle(Other.VertexColorStyle)
 	{}
@@ -47,9 +47,9 @@ namespace cbgui
 	{
 	}
 
-	cbWidget::SharedPtr cbImage::CloneWidget(cbSlot* NewOwner)
+	cbWidget::SharedPtr cbImage::CloneWidget()
 	{
-		return cbImage::Create(*this, NewOwner);
+		return cbImage::Create(*this);
 	}
 
 	void cbImage::BeginPlay()
@@ -213,9 +213,13 @@ namespace cbgui
 				GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 		}
 
+		cbColor Color = IsEnabled() ? VertexColorStyle.GetColor() : VertexColorStyle.GetDisabledColor();
+		auto Alpha = GetVertexColorAlpha();
+		if (Alpha.has_value())
+			Color.A = *Alpha;
+
 		return cbGeometryFactory::GetAlignedVertexData(cbGeometryFactory::Create4DPlaneVerticesFromRect(GetDimension()),
-			cbGeometryFactory::GeneratePlaneTextureCoordinate(),
-			IsEnabled() ? VertexColorStyle.GetColor() : VertexColorStyle.GetDisabledColor(),
+			cbGeometryFactory::GeneratePlaneTextureCoordinate(), Color,
 			GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 	}
 

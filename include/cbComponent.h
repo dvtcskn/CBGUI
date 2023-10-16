@@ -37,17 +37,20 @@ namespace cbgui
 		cbWidget* Owner;
 		cbComponent* ComponentOwner;
 		std::optional<std::string> Name;
+		std::optional<float> VertexColorAlpha;
 
 	public:
 		cbComponent(cbWidget* pOwner)
 			: Owner(pOwner)
 			, ComponentOwner(nullptr)
 			, Name(std::nullopt)
+			, VertexColorAlpha(std::nullopt)
 		{}
 		cbComponent(cbComponent* pComponentOwner)
 			: Owner(pComponentOwner->Owner)
 			, ComponentOwner(pComponentOwner)
 			, Name(std::nullopt)
+			, VertexColorAlpha(std::nullopt)
 		{}
 
 	public:
@@ -131,6 +134,27 @@ namespace cbgui
 		virtual cbVector GetRotatorOrigin() const override { return Owner->GetRotatorOrigin(); }
 		virtual bool IsRotated() const override { return Owner->IsRotated(); }
 		virtual float GetRotation() const override { return IsItAttachedToComponent() ? ComponentOwner->GetRotation() : Owner->GetRotation(); }
+
+		virtual void SetVertexColorAlpha(std::optional<float> Alpha, bool PropagateToChildren = true) override final
+		{
+			VertexColorAlpha = Alpha;
+
+			auto Components = GetAllComponents();
+			for (const auto& Component : Components)
+				Component->SetVertexColorAlpha(VertexColorAlpha, PropagateToChildren);
+
+			if (PropagateToChildren)
+			{
+				auto Children = GetAllChildren();
+
+				for (const auto& Child : Children)
+					Child->SetVertexColorAlpha(VertexColorAlpha, PropagateToChildren);
+			}
+
+			if (Owner->bShouldNotifyCanvas)
+				NotifyCanvas_WidgetUpdated();
+		}
+		virtual std::optional<float> GetVertexColorAlpha() const override final { return VertexColorAlpha; }
 
 		/* Resets the focus and input state. */
 		virtual void ResetInput() = 0;

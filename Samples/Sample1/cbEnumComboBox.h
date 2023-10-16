@@ -55,8 +55,8 @@ public:
 		SelectItem(0);
 	}
 
-	cbCanvasAnchorComboBox(const cbCanvasAnchorComboBox& Widget, cbSlot* NewOwner)
-		: Super(Widget, NewOwner)
+	cbCanvasAnchorComboBox(const cbCanvasAnchorComboBox& Widget)
+		: Super(Widget)
 		, AnchorStrings(Widget.AnchorStrings)
 		, fCallBack(Widget.fCallBack)
 	{}
@@ -69,9 +69,9 @@ public:
 		AnchorStrings.clear();
 	}
 
-	virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override
+	virtual cbWidget::SharedPtr CloneWidget() override
 	{
-		return cbCanvasAnchorComboBox::Create(*this, NewOwner);
+		return cbCanvasAnchorComboBox::Create(*this);
 	}
 
 	virtual void OnSelectionChanged(cbSlot* SelectedOption) 
@@ -108,8 +108,8 @@ public:
 		SelectItem(0);
 	}
 
-	cbVerticalAlignmentComboBox(const cbVerticalAlignmentComboBox& Widget, cbSlot* NewOwner)
-		: Super(Widget, NewOwner)
+	cbVerticalAlignmentComboBox(const cbVerticalAlignmentComboBox& Widget)
+		: Super(Widget)
 		, AnchorStrings(Widget.AnchorStrings)
 		, fCallBack(Widget.fCallBack)
 	{}
@@ -122,9 +122,9 @@ public:
 		AnchorStrings.clear();
 	}
 
-	virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override
+	virtual cbWidget::SharedPtr CloneWidget() override
 	{
-		return cbVerticalAlignmentComboBox::Create(*this, NewOwner);
+		return cbVerticalAlignmentComboBox::Create(*this);
 	}
 
 	virtual void OnSelectionChanged(cbSlot* SelectedOption)
@@ -161,8 +161,8 @@ public:
 		SelectItem(0);
 	}
 
-	cbHorizontalAlignmentComboBox(const cbHorizontalAlignmentComboBox& Widget, cbSlot* NewOwner)
-		: Super(Widget, NewOwner)
+	cbHorizontalAlignmentComboBox(const cbHorizontalAlignmentComboBox& Widget)
+		: Super(Widget)
 		, AnchorStrings(Widget.AnchorStrings)
 		, fCallBack(Widget.fCallBack)
 	{}
@@ -175,9 +175,9 @@ public:
 		AnchorStrings.clear();
 	}
 
-	virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override
+	virtual cbWidget::SharedPtr CloneWidget() override
 	{
-		return cbHorizontalAlignmentComboBox::Create(*this, NewOwner);
+		return cbHorizontalAlignmentComboBox::Create(*this);
 	}
 
 	virtual void OnSelectionChanged(cbSlot* SelectedOption)
@@ -212,8 +212,8 @@ public:
 		SelectItem(0);
 	}
 
-	cbAnchorComboBox(const cbAnchorComboBox& Widget, cbSlot* NewOwner)
-		: Super(Widget, NewOwner)
+	cbAnchorComboBox(const cbAnchorComboBox& Widget)
+		: Super(Widget)
 		, AnchorStrings(Widget.AnchorStrings)
 		, fCallBack(Widget.fCallBack)
 	{}
@@ -226,9 +226,9 @@ public:
 		AnchorStrings.clear();
 	}
 
-	virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override
+	virtual cbWidget::SharedPtr CloneWidget() override
 	{
-		return cbAnchorComboBox::Create(*this, NewOwner);
+		return cbAnchorComboBox::Create(*this);
 	}
 
 	virtual void OnSelectionChanged(cbSlot* SelectedOption)

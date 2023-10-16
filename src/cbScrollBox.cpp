@@ -321,9 +321,13 @@ namespace cbgui
 				GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 		}
 
+		cbColor Color = IsEnabled() ? VertexColorStyle.GetColor(ButtonState) : VertexColorStyle.GetDisabledColor();
+		auto Alpha = GetVertexColorAlpha();
+		if (Alpha.has_value())
+			Color.A = *Alpha;
+
 		return cbGeometryFactory::GetAlignedVertexData(cbGeometryFactory::Create4DPlaneVerticesFromRect(GetDimension()),
-			cbGeometryFactory::GeneratePlaneTextureCoordinate(),
-			IsEnabled() ? VertexColorStyle.GetColor(ButtonState) : VertexColorStyle.GetDisabledColor(),
+			cbGeometryFactory::GeneratePlaneTextureCoordinate(), Color,
 			GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 	}
 
@@ -598,10 +602,14 @@ namespace cbgui
 				GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 		}
 
+		cbColor Color = IsEnabled() ? VertexColorStyle.GetColor() : VertexColorStyle.GetDisabledColor();
+		auto Alpha = GetVertexColorAlpha();
+		if (Alpha.has_value())
+			Color.A = *Alpha;
+
 		return cbGeometryFactory::GetAlignedVertexData(cbGeometryFactory::Create4DPlaneVerticesFromRect(GetOrientation() == eOrientation::Vertical ? 
 													   cbDimension(BarThickness, GetLength()) : cbDimension(GetLength(), BarThickness)),
-			   cbGeometryFactory::GeneratePlaneTextureCoordinate(),
-			   IsEnabled() ? VertexColorStyle.GetColor() : VertexColorStyle.GetDisabledColor(),
+			   cbGeometryFactory::GeneratePlaneTextureCoordinate(), Color,
 			   GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 	}
 
@@ -943,8 +951,8 @@ namespace cbgui
 		SetScrollBarThickness(10.0f);
 	}
 
-	cbgui::cbScrollBox::cbScrollBox(const cbScrollBox& Other, cbSlot* NewOwner)
-		: Super(Other, NewOwner)
+	cbgui::cbScrollBox::cbScrollBox(const cbScrollBox& Other)
+		: Super(Other)
 		, Transform(Other.Transform)
 		, Orientation(Other.Orientation)
 		, slotsize(0)
@@ -973,9 +981,9 @@ namespace cbgui
 		slotsize = 0;
 	}
 
-	cbWidget::SharedPtr cbScrollBox::CloneWidget(cbSlot* NewOwner)
+	cbWidget::SharedPtr cbScrollBox::CloneWidget()
 	{
-		cbScrollBox::SharedPtr ScrollBox = cbScrollBox::Create(*this, NewOwner);
+		cbScrollBox::SharedPtr ScrollBox = cbScrollBox::Create(*this);
 
 		/*std::size_t SlotSize = GetSlotSize();
 		for (std::size_t i = 0; i < SlotSize; i++)
@@ -1429,6 +1437,10 @@ namespace cbgui
 
 		Slot->UpdateRotation();
 		Slot->UpdateStatus();
+
+		auto Alpha = GetVertexColorAlpha();
+		if (Alpha.has_value())
+			Slot->SetVertexColorAlpha(Alpha);
 
 		ScrollBar->UpdateAlignments();
 

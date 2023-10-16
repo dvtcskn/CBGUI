@@ -105,10 +105,10 @@ namespace cbgui
 
 	public:
 		cbSizeBox();
-		cbSizeBox(const cbSizeBox& Other, cbSlot* NewOwner = nullptr);
+		cbSizeBox(const cbSizeBox& Other);
 		virtual ~cbSizeBox();
 
-		virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override;
+		virtual cbWidget::SharedPtr CloneWidget() override;
 
 	public:
 		virtual cbVector GetLocation() const override final { return Transform.GetCenter(); }

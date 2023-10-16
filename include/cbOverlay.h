@@ -104,7 +104,7 @@ namespace cbgui
 
 	public:
 		cbOverlay();
-		cbOverlay(const cbOverlay& Other, cbSlot* NewOwner = nullptr);
+		cbOverlay(const cbOverlay& Other);
 	public:
 		virtual ~cbOverlay() 
 		{
@@ -114,7 +114,7 @@ namespace cbgui
 			slotsize = 0;
 		}
 
-		virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override;
+		virtual cbWidget::SharedPtr CloneWidget() override;
 
 	public:
 		virtual cbVector GetLocation() const override final { return Transform.GetCenter(); }

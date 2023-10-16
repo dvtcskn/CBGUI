@@ -42,8 +42,8 @@ public:
 	{
 		cbClassBody(cbClassDefaultProtectedConstructor, cbComboBoxMenuInterface, cbOverlay);
 	protected:
-		cbComboBoxMenuInterface(const cbOverlay& Other, cbSlot* NewOwner = nullptr)
-			: Super(Other, NewOwner)
+		cbComboBoxMenuInterface(const cbOverlay& Other)
+			: Super(Other)
 		{}
 
 	public:
@@ -76,15 +76,15 @@ public:
 					: Super()
 				{}
 
-				cbComboBoxMenuButton(const cbComboBoxMenuButton& ComboBoxMenuButton, cbSlot* NewOwner)
-					: Super(ComboBoxMenuButton, NewOwner)
+				cbComboBoxMenuButton(const cbComboBoxMenuButton& ComboBoxMenuButton)
+					: Super(ComboBoxMenuButton)
 				{}
 
 				virtual ~cbComboBoxMenuButton() = default;
 
-				virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override
+				virtual cbWidget::SharedPtr CloneWidget() override
 				{
-					return cbComboBoxMenuButton::Create(*this, NewOwner);
+					return cbComboBoxMenuButton::Create(*this);
 				}
 			};
 
@@ -116,17 +116,17 @@ public:
 				Insert(Text);
 			}
 
-			cbComboBoxNamedButtonInterface(const cbComboBoxNamedButtonInterface& Interface, cbSlot* NewOwner)
-				: Super(Interface, NewOwner)
+			cbComboBoxNamedButtonInterface(const cbComboBoxNamedButtonInterface& Interface)
+				: Super(Interface)
 			{
 				BTNStyle = Interface.BTNStyle;
 				BTN = GetSlot(0)->GetSharedContent<cbComboBoxMenuButton>();
 				Text = GetSlot(1)->GetSharedContent<cbString>();
 			}
 
-			virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override
+			virtual cbWidget::SharedPtr CloneWidget() override
 			{
-				return cbComboBoxNamedButtonInterface::Create(*this, NewOwner);
+				return cbComboBoxNamedButtonInterface::Create(*this);
 			}
 
 			virtual ~cbComboBoxNamedButtonInterface()
@@ -298,11 +298,11 @@ public:
 
 public:
 	cbComboBox(const cbgui::eOrientation Orientation = cbgui::eOrientation::Vertical);
-	cbComboBox(const cbComboBox& Widget, cbSlot* NewOwner = nullptr);
+	cbComboBox(const cbComboBox& Widget);
 public:
 	virtual ~cbComboBox();
 
-	virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override;
+	virtual cbWidget::SharedPtr CloneWidget() override;
 
 public:
 	inline bool IsMenuOpen() const { return bIsOpen; }

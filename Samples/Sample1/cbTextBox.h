@@ -67,7 +67,7 @@ protected:
 		cbTextSlot(const cbTextSlot& Other, cbSlottedBox* NewOwner)
 			: Super(Other, NewOwner)
 			, bIsInserted(false)
-			, Content(Other.Content->Clone<cbString>(this))
+			, Content(Other.Content->Clone<cbString>())
 			, Location(Other.Location)
 		{
 			Content->AttachToSlot(this);
@@ -243,6 +243,11 @@ protected:
 		virtual std::vector<cbGeometryVertexData> GetVertexData(const bool LineGeometry) const override final
 		{
 			float Rotation = GetRotation();
+			cbColor Color = cbColor::Black();
+			auto Alpha = GetVertexColorAlpha();
+			if (Alpha.has_value())
+				Color.A = *Alpha;
+
 			return cbGeometryFactory::GetAlignedVertexData(cbGeometryFactory::Create4DPlaneVerticesFromRect(GetDimension()),
 				cbGeometryFactory::GeneratePlaneTextureCoordinate(),
 				cbColor::Black(),
@@ -491,12 +496,12 @@ public:
 public:
 	cbTextBox();
 	cbTextBox(const std::u32string& Text, const cbTextDesc& TextDesc = cbTextDesc());
-	cbTextBox(const cbTextBox& TextBox, cbSlot* NewOwner = nullptr);
+	cbTextBox(const cbTextBox& TextBox);
 
 public:
 	virtual ~cbTextBox();
 
-	virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override;
+	virtual cbWidget::SharedPtr CloneWidget() override;
 
 public:
 	virtual cbVector GetLocation() const override final { return Transform.GetCenter(); }

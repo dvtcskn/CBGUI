@@ -118,10 +118,10 @@ namespace cbgui
 
 	public:
 		cbBorder();
-		cbBorder(const cbBorder& Widget, cbSlot* NewOwner = nullptr);
+		cbBorder(const cbBorder& Widget);
 		virtual ~cbBorder();
 
-		virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override;
+		virtual cbWidget::SharedPtr CloneWidget() override;
 
 	public:
 		virtual cbVector GetLocation() const override final { return Transform.GetCenter(); }

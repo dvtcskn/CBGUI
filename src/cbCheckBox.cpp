@@ -39,8 +39,8 @@ namespace cbgui
 		, bIsHovered(false)
 	{}
 
-	cbCheckBox::cbCheckBox(const cbCheckBox& Other, cbSlot* NewOwner)
-		: Super(Other, NewOwner)
+	cbCheckBox::cbCheckBox(const cbCheckBox& Other)
+		: Super(Other)
 		, Transform(Other.Transform)
 		, fOnCheckStateChanged(nullptr)
 		, CheckBoxState(Other.CheckBoxState)
@@ -54,9 +54,9 @@ namespace cbgui
 		fOnCheckStateChanged = nullptr;
 	}
 
-	cbWidget::SharedPtr cbCheckBox::CloneWidget(cbSlot* NewOwner)
+	cbWidget::SharedPtr cbCheckBox::CloneWidget()
 	{
-		return cbCheckBox::Create(*this, NewOwner);
+		return cbCheckBox::Create(*this);
 	}
 
 	void cbCheckBox::BeginPlay()
@@ -627,9 +627,13 @@ namespace cbgui
 				GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 		}
 
+		cbColor Color = IsEnabled() ? VertexColorStyle.GetColor(CheckBoxState) : VertexColorStyle.GetDisabledColor(CheckBoxState);
+		auto Alpha = GetVertexColorAlpha();
+		if (Alpha.has_value())
+			Color.A = *Alpha;
+
 		return cbGeometryFactory::GetAlignedVertexData(cbGeometryFactory::Create4DPlaneVerticesFromRect(GetDimension()),
-			cbGeometryFactory::GeneratePlaneTextureCoordinate(),
-			IsEnabled() ? VertexColorStyle.GetColor(CheckBoxState) : VertexColorStyle.GetDisabledColor(CheckBoxState),
+			cbGeometryFactory::GeneratePlaneTextureCoordinate(), Color,
 			GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 	}
 

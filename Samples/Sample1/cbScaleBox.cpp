@@ -53,8 +53,8 @@ namespace cbgui
 		, fLostOnFocus(nullptr)
 	{}
 
-	cbScaleBox::cbScaleBox(const cbScaleBox & Widget, cbSlot * NewOwner)
-		: Super(Widget, NewOwner)
+	cbScaleBox::cbScaleBox(const cbScaleBox & Widget)
+		: Super(Widget)
 		, Transform(Widget.Transform)
 		, Scaler(Widget.Scaler)
 		, Slot(nullptr)
@@ -76,9 +76,9 @@ namespace cbgui
 		fLostOnFocus = nullptr;
 	}
 
-	cbWidget::SharedPtr cbScaleBox::CloneWidget(cbSlot* NewOwner)
+	cbWidget::SharedPtr cbScaleBox::CloneWidget()
 	{
-		return cbScaleBox::Create(*this, NewOwner);
+		return cbScaleBox::Create(*this);
 	}
 
 	float cbScaleBox::GetRotation() const
@@ -439,6 +439,10 @@ namespace cbgui
 
 			if (cbICanvas* Canvas = GetCanvas())
 				Canvas->SlotContentReplaced(Slot.get(), Old.get(), Content.get());
+
+			auto Alpha = GetVertexColorAlpha();
+			if (Alpha.has_value())
+				Slot->SetVertexColorAlpha(Alpha);
 		}
 	}
 
@@ -460,6 +464,10 @@ namespace cbgui
 
 		Slot->UpdateRotation();
 		Slot->UpdateStatus();
+
+		auto Alpha = GetVertexColorAlpha();
+		if (Alpha.has_value())
+			Slot->SetVertexColorAlpha(Alpha);
 	}
 
 	void cbScaleBox::UpdateVerticalAlignment(const bool ForceAlign)

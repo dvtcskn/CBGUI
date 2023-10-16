@@ -334,12 +334,12 @@ namespace cbgui
 
 	public:
 		cbScrollBox(const eOrientation orientation = eOrientation::Vertical);
-		cbScrollBox(const cbScrollBox& Other, cbSlot* NewOwner = nullptr);
+		cbScrollBox(const cbScrollBox& Other);
 
 	public:
 		virtual ~cbScrollBox();
 
-		virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override;
+		virtual cbWidget::SharedPtr CloneWidget() override;
 
 	public:
 		virtual cbVector GetLocation() const override final { return Transform.GetCenter(); }

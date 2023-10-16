@@ -41,8 +41,8 @@ namespace cbgui
 		, fOnUnhovered(nullptr)
 	{}
 
-	cbButton::cbButton(const cbButton& Other, cbSlot* NewOwner)
-		: Super(Other, NewOwner)
+	cbButton::cbButton(const cbButton& Other)
+		: Super(Other)
 		, Transform(Other.Transform)
 		, ButtonState(Other.ButtonState)
 		, VertexColorStyle(Other.VertexColorStyle)
@@ -62,9 +62,9 @@ namespace cbgui
 		fOnUnhovered = nullptr;
 	}
 
-	cbWidget::SharedPtr cbButton::CloneWidget(cbSlot* NewOwner)
+	cbWidget::SharedPtr cbButton::CloneWidget()
 	{
-		return cbButton::Create(*this, NewOwner);
+		return cbButton::Create(*this);
 	}
 
 	void cbButton::BeginPlay()
@@ -108,9 +108,13 @@ namespace cbgui
 				GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 		}
 
+		cbColor Color = IsEnabled() ? VertexColorStyle.GetColor(ButtonState) : VertexColorStyle.GetDisabledColor();
+		auto Alpha = GetVertexColorAlpha();
+		if (Alpha.has_value())
+			Color.A = *Alpha;
+
 		return cbGeometryFactory::GetAlignedVertexData(cbGeometryFactory::Create4DPlaneVerticesFromRect(GetDimension()),
-			   cbGeometryFactory::GeneratePlaneTextureCoordinate(),
-			   IsEnabled() ? VertexColorStyle.GetColor(ButtonState) : VertexColorStyle.GetDisabledColor(),
+			   cbGeometryFactory::GeneratePlaneTextureCoordinate(), Color,
 			   GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 	}
 

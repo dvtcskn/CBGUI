@@ -133,13 +133,13 @@ public:
 		: cbgui::cbText(Text, TextDesc, cbFontResources::Get().GetFontFamily(0))
 	{}
 
-	cbString(const cbString& String, cbgui::cbSlot* NewOwner = nullptr)
-		: Super(String, NewOwner)
+	cbString(const cbString& String)
+		: Super(String)
 	{}
 
-	cbWidget::SharedPtr CloneWidget(cbgui::cbSlot* NewOwner)
+	cbWidget::SharedPtr CloneWidget()
 	{
-		return cbString::Create(*this, NewOwner);
+		return cbString::Create(*this);
 	}
 
 	void SetString(const std::string& Text, const std::optional<cbgui::cbTextDesc> TextDesc = std::nullopt) 

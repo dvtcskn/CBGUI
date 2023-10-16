@@ -49,7 +49,7 @@ namespace cbgui
 		, slotsize(0)
 	{}
 
-	cbgui::cbVerticalBox::cbVerticalBox(const cbVerticalBox& Widget, cbSlot* NewOwner)
+	cbgui::cbVerticalBox::cbVerticalBox(const cbVerticalBox& Widget)
 		: Super(Widget)
 		, Transform(Widget.Transform)
 		, slotsize(0)
@@ -62,9 +62,9 @@ namespace cbgui
 		}
 	}
 
-	cbWidget::SharedPtr cbVerticalBox::CloneWidget(cbSlot* NewOwner)
+	cbWidget::SharedPtr cbVerticalBox::CloneWidget()
 	{
-		cbVerticalBox::SharedPtr VerticalBox = cbVerticalBox::Create(*this, NewOwner);
+		cbVerticalBox::SharedPtr VerticalBox = cbVerticalBox::Create(*this);
 
 		//std::size_t SlotSize = GetSlotSize();
 		//for (std::size_t i = 0; i < SlotSize; i++)
@@ -268,6 +268,10 @@ namespace cbgui
 
 		Slot->UpdateRotation();
 		Slot->UpdateStatus();
+
+		auto Alpha = GetVertexColorAlpha();
+		if (Alpha.has_value())
+			Slot->SetVertexColorAlpha(Alpha);
 
 		return Slot.get();
 	}

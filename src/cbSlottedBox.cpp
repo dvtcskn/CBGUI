@@ -304,6 +304,19 @@ namespace cbgui
 			pOwner->OnRemoveSlot(this);
 	}
 
+	void cbSlot::SetVertexColorAlpha(std::optional<float> Alpha, bool PropagateToChildren)
+	{
+		if (HasContent())
+			GetContent()->SetVertexColorAlpha(Alpha, PropagateToChildren);
+	}
+
+	std::optional<float> cbSlot::GetVertexColorAlpha() const
+	{
+		if (IsInserted())
+			return Owner->GetVertexColorAlpha();
+		return std::optional<float>();
+	}
+
 	void cbSlot::Notify_DimensionChanged()
 	{
 		if (Owner && IsInserted())

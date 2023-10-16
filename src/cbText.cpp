@@ -43,8 +43,8 @@ namespace cbgui
 		SetFocusable(false);
 	}
 
-	cbText::cbText(const cbText& Other, cbSlot* NewOwner)
-		: cbWidget(Other, NewOwner)
+	cbText::cbText(const cbText& Other)
+		: cbWidget(Other)
 		, Transform(Other.Transform)
 		, LetterDrawCount(Other.LetterDrawCount)
 		, FontGeometryBuilder(Other.FontGeometryBuilder->CloneUnique(this))
@@ -58,7 +58,7 @@ namespace cbgui
 		FontGeometryBuilder = nullptr;
 	}
 
-	cbWidget::SharedPtr cbText::CloneWidget(cbSlot* NewOwner)
+	cbWidget::SharedPtr cbText::CloneWidget()
 	{
 		return cbText::Create(*this);
 	}
@@ -1055,6 +1055,8 @@ namespace cbgui
 		const auto& Colors = FontGeometryBuilder->GetVertexColors();
 		const auto& DisabledVertexColorStyle = FontGeometryBuilder->GetVertexColorStyle().GetDisabledVertexColorStyle();
 
+		auto Alpha = GetVertexColorAlpha();
+
 		const bool bIsEnabled = IsEnabled();
 
 		std::vector<cbGeometryVertexData> Container;
@@ -1100,6 +1102,10 @@ namespace cbgui
 				GeometryData.Color = bIsEnabled ? Colors[i] : DisabledVertexColorStyle(Colors[i]);
 			else
 				GeometryData.Color = bIsEnabled ? Colors[Colors.size() - 1] : DisabledVertexColorStyle(Colors[Colors.size() - 1]);
+
+			if (Alpha.has_value())
+				GeometryData.Color.A = *Alpha;
+
 			Container.push_back(GeometryData);
 		}
 

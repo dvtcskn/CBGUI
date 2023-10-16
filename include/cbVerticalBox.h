@@ -183,7 +183,7 @@ namespace cbgui
 
 	public:
 		cbVerticalBox();
-		cbVerticalBox(const cbVerticalBox& Widget, cbSlot* NewOwner = nullptr);
+		cbVerticalBox(const cbVerticalBox& Widget);
 
 		virtual ~cbVerticalBox()
 		{
@@ -193,7 +193,7 @@ namespace cbgui
 			slotsize = 0;
 		}
 
-		virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) override;
+		virtual cbWidget::SharedPtr CloneWidget() override;
 
 	public:
 		virtual cbVector GetLocation() const override final { return Transform.GetCenter(); }

@@ -52,8 +52,8 @@ namespace cbgui
 		SetHorizontalAlignment(eHorizontalAlignment::Align_Fill);
 	}
 
-	cbgui::cbOverlay::cbOverlay(const cbOverlay& Other, cbSlot* NewOwner)
-		: Super(Other, NewOwner)
+	cbgui::cbOverlay::cbOverlay(const cbOverlay& Other)
+		: Super(Other)
 		, Transform(Other.Transform)
 		, slotsize(0)
 	{
@@ -65,9 +65,9 @@ namespace cbgui
 		}
 	}
 
-	cbWidget::SharedPtr cbOverlay::CloneWidget(cbSlot* NewOwner)
+	cbWidget::SharedPtr cbOverlay::CloneWidget()
 	{
-		cbOverlay::SharedPtr Overlay = cbOverlay::Create(*this, NewOwner);
+		cbOverlay::SharedPtr Overlay = cbOverlay::Create(*this);
 
 		/*std::size_t SlotSize = GetSlotSize();
 		for (std::size_t i = 0; i < SlotSize; i++)
@@ -257,6 +257,10 @@ namespace cbgui
 
 		Slot->UpdateRotation();
 		Slot->UpdateStatus();
+
+		auto Alpha = GetVertexColorAlpha();
+		if (Alpha.has_value())
+			Slot->SetVertexColorAlpha(Alpha);
 
 		return Slot.get();
 	}

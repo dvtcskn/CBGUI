@@ -116,6 +116,13 @@ namespace cbgui
 		virtual std::vector<cbGeometryVertexData> GetVertexData(const bool LineGeometry = false) const = 0;
 		virtual std::vector<std::uint32_t> GetIndexData(const bool LineGeometry = false) const = 0;
 		virtual cbGeometryDrawData GetGeometryDrawData(const bool LineGeometry = false) const = 0;
+		/*
+		* Overrides Vertex Color Style Alpha
+		* If Alpha is std::nullopt, VertexColorStyle controls the Alpha channel.
+		* This could be a fade out effect.
+		*/
+		virtual void SetVertexColorAlpha(std::optional<float> Alpha, bool PropagateToChildren = true) = 0;
+		virtual std::optional<float> GetVertexColorAlpha() const = 0;
 
 		virtual bool HasAnyChildren() const = 0;
 		virtual std::vector<cbWidgetObj*> GetAllChildren() const = 0;
@@ -128,7 +135,7 @@ namespace cbgui
 		friend cbSlot;
 	protected:
 		cbWidget();
-		cbWidget(const cbWidget& Widget, cbSlot* NewOwner = nullptr);
+		cbWidget(const cbWidget& Widget);
 
 	public:
 		virtual ~cbWidget();
@@ -143,8 +150,8 @@ namespace cbgui
 		std::optional<long> GetSharedObjectUseCount() const { if (!IsItSharedObject()) return std::nullopt; return weak_from_this().use_count(); }
 
 		template<typename T>
-		std::shared_ptr<T> Clone(cbSlot* NewOwner = nullptr) { return std::static_pointer_cast<T>(CloneWidget(NewOwner)); }
-		virtual cbWidget::SharedPtr CloneWidget(cbSlot* NewOwner = nullptr) = 0;
+		std::shared_ptr<T> Clone() { return std::static_pointer_cast<T>(CloneWidget()); }
+		virtual cbWidget::SharedPtr CloneWidget() = 0;
 
 		/*
 		* If it has no owner and no canvas, returns the center position.
@@ -178,6 +185,9 @@ namespace cbgui
 		virtual cbMargin GetPadding() const = 0;
 		/* Padding is used to align with offset. The padding only works if attached into slot. */
 		virtual void SetPadding(const cbMargin& Padding) = 0;
+
+		virtual void SetVertexColorAlpha(std::optional<float> Alpha, bool PropagateToChildren = true) override final;
+		virtual std::optional<float> GetVertexColorAlpha() const override final;
 
 		virtual bool IsInside(const cbVector& Location) const;
 		virtual bool Intersect(const cbBounds& Other) const;
@@ -327,6 +337,8 @@ namespace cbgui
 
 	private:
 		std::optional<std::string> Name;
+
+		std::optional<float> VertexColorAlpha;
 
 		bool bIsEnabled;
 		eVisibility Visibility;
