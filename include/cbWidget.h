@@ -58,6 +58,12 @@ namespace cbgui
 		* If canvas exists, returns the center position of the canvas.
 		*/
 		virtual cbVector GetOrigin() const = 0;
+		/*
+		* If it has no owner and no canvas, returns the center position.
+		* If owner exists, returns the rotated owner location.
+		* If canvas exists, returns the center position of the canvas.
+		*/
+		virtual cbVector GetRotatorOrigin() const = 0;
 
 		virtual cbBounds GetBounds() const = 0;
 		/* Return Location of the Widget, in world space */
@@ -146,6 +152,7 @@ namespace cbgui
 		* If canvas exists, returns the center position of the canvas.
 		*/
 		virtual cbVector GetOrigin() const override;
+		virtual cbVector GetRotatorOrigin() const override;
 
 		/* Return NonAligned/Wrapped width of the Widget */
 		virtual float GetNonAlignedWidth() const = 0;

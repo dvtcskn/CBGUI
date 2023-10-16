@@ -300,6 +300,7 @@ namespace cbgui
 
 	std::vector<cbGeometryVertexData> cbScrollBox::cbScrollBarComponent::cbScrollBarHandleComponent::GetVertexData(const bool LineGeometry) const
 	{
+		float Rotation = GetRotation();
 		if (LineGeometry)
 		{
 			cbBounds Bounds(GetDimension());
@@ -317,13 +318,13 @@ namespace cbgui
 
 			return cbGeometryFactory::GetAlignedVertexData(Data, TC,
 				IsEnabled() ? VertexColorStyle.GetColor(ButtonState) : VertexColorStyle.GetDisabledColor(),
-				GetLocation(), GetRotation(), GetRotation() != 0.0f ? GetOrigin() : cbVector::Zero());
+				GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 		}
 
 		return cbGeometryFactory::GetAlignedVertexData(cbGeometryFactory::Create4DPlaneVerticesFromRect(GetDimension()),
 			cbGeometryFactory::GeneratePlaneTextureCoordinate(),
 			IsEnabled() ? VertexColorStyle.GetColor(ButtonState) : VertexColorStyle.GetDisabledColor(),
-			GetLocation(), GetRotation(), GetRotation() != 0.0f ? GetOrigin() : cbVector::Zero());
+			GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 	}
 
 	std::vector<std::uint32_t> cbScrollBox::cbScrollBarComponent::cbScrollBarHandleComponent::GetIndexData(const bool LineGeometry) const
@@ -569,6 +570,7 @@ namespace cbgui
 
 	std::vector<cbGeometryVertexData> cbScrollBox::cbScrollBarComponent::GetVertexData(const bool LineGeometry) const
 	{
+		float Rotation = GetRotation();
 		if (LineGeometry)
 		{
 			cbBounds Bounds(GetDimension());
@@ -593,14 +595,14 @@ namespace cbgui
 
 			return cbGeometryFactory::GetAlignedVertexData(Data, TC,
 				IsEnabled() ? VertexColorStyle.GetColor() : VertexColorStyle.GetDisabledColor(),
-				GetLocation(), GetRotation(), GetRotation() != 0.0f ? GetOrigin() : cbVector::Zero());
+				GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 		}
 
 		return cbGeometryFactory::GetAlignedVertexData(cbGeometryFactory::Create4DPlaneVerticesFromRect(GetOrientation() == eOrientation::Vertical ? 
 													   cbDimension(BarThickness, GetLength()) : cbDimension(GetLength(), BarThickness)),
 			   cbGeometryFactory::GeneratePlaneTextureCoordinate(),
 			   IsEnabled() ? VertexColorStyle.GetColor() : VertexColorStyle.GetDisabledColor(),
-			   GetLocation(), GetRotation(), GetRotation() != 0.0f ? GetOrigin() : cbVector::Zero());
+			   GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 	}
 
 	std::vector<std::uint32_t> cbScrollBox::cbScrollBarComponent::GetIndexData(const bool LineGeometry) const
@@ -2314,6 +2316,7 @@ namespace cbgui
 	{
 		if (LineGeometry)
 		{
+			float Rotation = GetRotation();
 			cbBounds Bounds(GetDimension());
 			std::vector<cbVector4> Data;
 			Data.push_back(cbVector4(Bounds.GetCorner(0), 0.0f, 1.0f));
@@ -2329,7 +2332,7 @@ namespace cbgui
 
 			return cbGeometryFactory::GetAlignedVertexData(Data, TC,
 				cbColor::White(),
-				GetLocation(), GetRotation(), IsRotated() ? GetOrigin() : cbVector::Zero());
+				GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 		}
 		return std::vector<cbGeometryVertexData>();
 	};

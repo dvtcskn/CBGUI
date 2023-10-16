@@ -579,8 +579,8 @@ namespace cbgui
 		const float Left = TextJustify == eTextJustify::Left || bForceLeft ? Transform.GetLeft() + (GeometryBounds.GetWidth() / 2.0f) : 0.0f;
 		const float Right = TextJustify == eTextJustify::Right || !bForceLeft ? Transform.GetRight() - (GeometryBounds.GetWidth() / 2.0f) : 0.0f;
 
-		const float& Rotation(Transform.GetRotation());
-		const cbVector& Origin = Rotation != 0.0f ? GetOrigin() : cbVector::Zero();
+		const float& Rotation(GetRotation());
+		const cbVector& Origin = Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero();
 
 		for (std::size_t i = 0; i < outCharacterData.size(); i++)
 		{
@@ -689,8 +689,8 @@ namespace cbgui
 		const float Left = TextJustify == eTextJustify::Left || bForceLeft ? Transform.GetLeft() + (GeometryBounds.GetWidth() / 2.0f) : 0.0f;
 		const float Right = TextJustify == eTextJustify::Right || !bForceLeft ? Transform.GetRight() - (GeometryBounds.GetWidth() / 2.0f) : 0.0f;
 
-		const float& Rotation(Transform.GetRotation());
-		const cbVector& Origin = Rotation != 0.0f ? GetOrigin() : cbVector::Zero();
+		const float& Rotation(GetRotation());
+		const cbVector& Origin = Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero();
 
 		{
 			std::vector<cbVector4> vertices = GetVertices(outCharacterData.value().Bounds);
@@ -1009,6 +1009,7 @@ namespace cbgui
 
 	std::vector<cbGeometryVertexData> cbText::GetVertexData(const bool LineGeometry) const
 	{
+		float Rotation = GetRotation();
 		if (LineGeometry)
 		{
 			cbBounds Bounds(GetDimension());
@@ -1027,7 +1028,7 @@ namespace cbgui
 			return cbGeometryFactory::GetAlignedVertexData(Data, TC,
 				IsEnabled() ? FontGeometryBuilder->GetVertexColorStyle().GetColor() 
 							: FontGeometryBuilder->GetVertexColorStyle().GetDisabledColor(),
-				GetLocation(), GetRotation(), IsRotated() ? GetOrigin() : cbVector::Zero());
+				GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 		}
 
 		const auto& Vertices = FontGeometryBuilder->GetVertices();
@@ -1048,8 +1049,7 @@ namespace cbgui
 		const float Left = TextJustify == eTextJustify::Left || bForceLeft ? Transform.GetLeft() + (GeometryBounds.GetWidth() / 2.0f) : 0.0f;
 		const float Right = TextJustify == eTextJustify::Right || !bForceLeft ? Transform.GetRight() - (GeometryBounds.GetWidth() / 2.0f) : 0.0f;
 
-		const float& Rotation(Transform.GetRotation());
-		const cbVector& Origin = Rotation != 0.0f ? GetOrigin() : cbVector::Zero();
+		const cbVector& Origin = Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero();
 
 		const auto& TextureCoordinates = FontGeometryBuilder->GetTextureCoordinate();
 		const auto& Colors = FontGeometryBuilder->GetVertexColors();

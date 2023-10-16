@@ -340,6 +340,7 @@ namespace cbgui
 
 	std::vector<cbGeometryVertexData> cbSlider::cbSliderHandleComponent::GetVertexData(const bool LineGeometry) const
 	{
+		float Rotation = GetRotation();
 		if (LineGeometry)
 		{
 			cbBounds Bounds(GetDimension());
@@ -357,13 +358,13 @@ namespace cbgui
 
 			return cbGeometryFactory::GetAlignedVertexData(Data, TC,
 				IsEnabled() ? VertexColorStyle.GetColor(ButtonState) : VertexColorStyle.GetDisabledColor(),
-				GetLocation(), GetRotation(), GetRotation() != 0.0f ? GetOrigin() : cbVector::Zero());
+				GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 		}
 
 		return cbGeometryFactory::GetAlignedVertexData(cbGeometryFactory::Create4DPlaneVerticesFromRect(GetDimension()),
 			cbGeometryFactory::GeneratePlaneTextureCoordinate(),
 			IsEnabled() ? VertexColorStyle.GetColor(ButtonState) : VertexColorStyle.GetDisabledColor(),
-			GetLocation(), GetRotation(), GetRotation() != 0.0f ? GetOrigin() : cbVector::Zero());
+			GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 	}
 
 	std::vector<std::uint32_t> cbSlider::cbSliderHandleComponent::GetIndexData(const bool LineGeometry) const
@@ -823,6 +824,7 @@ namespace cbgui
 
 	std::vector<cbGeometryVertexData> cbSlider::GetVertexData(const bool LineGeometry) const
 	{
+		float Rotation = GetRotation();
 		if (LineGeometry)
 		{
 			cbBounds Bounds(GetDimension());
@@ -847,14 +849,14 @@ namespace cbgui
 
 			return cbGeometryFactory::GetAlignedVertexData(Data, TC,
 				IsEnabled() ? VertexColorStyle.GetColor() : VertexColorStyle.GetDisabledColor(),
-				GetLocation(), GetRotation(), GetRotation() != 0.0f ? GetOrigin() : cbVector::Zero());
+				GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 		}
 
 		return cbGeometryFactory::GetAlignedVertexData(cbGeometryFactory::Create4DPlaneVerticesFromRect(GetOrientation() == eOrientation::Vertical ?
 														cbDimension(GetBarThickness(), GetBarLength()) : cbDimension(GetBarLength(), GetBarThickness())),
 			cbGeometryFactory::GeneratePlaneTextureCoordinate(),
 			IsEnabled() ? VertexColorStyle.GetColor() : VertexColorStyle.GetDisabledColor(),
-			GetLocation(), GetRotation(), IsRotated() ? GetOrigin() : cbVector::Zero());
+			GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 	}
 
 	std::vector<std::uint32_t> cbSlider::GetIndexData(const bool LineGeometry) const

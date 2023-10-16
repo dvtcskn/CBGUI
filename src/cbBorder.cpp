@@ -271,6 +271,7 @@ namespace cbgui
 
 	std::vector<cbGeometryVertexData> cbBorder::GetVertexData(const bool LineGeometry) const
 	{
+		float Rotation = GetRotation();
 		if (LineGeometry)
 		{
 			cbBounds Bounds(GetDimension());
@@ -294,13 +295,13 @@ namespace cbgui
 
 			return cbGeometryFactory::GetAlignedVertexData(Data, TC,
 				IsEnabled() ? VertexColorStyle.GetColor() : VertexColorStyle.GetDisabledColor(),
-				GetLocation(), GetRotation(), GetRotation() != 0.0f ? GetOrigin() : cbVector::Zero());
+				GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 		}
 
 		return cbGeometryFactory::GetAlignedVertexData(cbGeometryFactory::GenerateBorderVertices(Transform.GetDimension(), BorderThickness), 
 			   cbGeometryFactory::GenerateBorderTextureCoordinate(), 
 			   IsEnabled() ? VertexColorStyle.Color : VertexColorStyle.GetDisabledColor(),
-			   GetLocation(), GetRotation(), IsRotated() ? GetOrigin() : cbVector::Zero());
+			   GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 	}
 
 	std::vector<std::uint32_t> cbBorder::GetIndexData(const bool LineGeometry) const

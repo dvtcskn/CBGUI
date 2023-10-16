@@ -606,6 +606,7 @@ namespace cbgui
 
 	std::vector<cbGeometryVertexData> cbCheckBox::GetVertexData(const bool LineGeometry) const
 	{
+		float Rotation = GetRotation();
 		if (LineGeometry)
 		{
 			cbBounds Bounds(GetDimension());
@@ -623,13 +624,13 @@ namespace cbgui
 
 			return cbGeometryFactory::GetAlignedVertexData(Data, TC,
 				IsEnabled() ? VertexColorStyle.GetColor(CheckBoxState) : VertexColorStyle.GetDisabledColor(CheckBoxState),
-				GetLocation(), GetRotation(), IsRotated() ? GetOrigin() : cbVector::Zero());
+				GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 		}
 
 		return cbGeometryFactory::GetAlignedVertexData(cbGeometryFactory::Create4DPlaneVerticesFromRect(GetDimension()),
 			cbGeometryFactory::GeneratePlaneTextureCoordinate(),
 			IsEnabled() ? VertexColorStyle.GetColor(CheckBoxState) : VertexColorStyle.GetDisabledColor(CheckBoxState),
-			GetLocation(), GetRotation(), IsRotated() ? GetOrigin() : cbVector::Zero());
+			GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 	}
 
 	std::vector<std::uint32_t> cbCheckBox::GetIndexData(const bool LineGeometry) const

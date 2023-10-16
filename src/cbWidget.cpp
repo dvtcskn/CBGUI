@@ -268,24 +268,40 @@ namespace cbgui
 		if (Owner)
 		{
 			if (IsRotated())
-				return cbgui::RecalculateBounds(GetDimension(), GetLocation(), GetRotation(), GetOrigin()).Crop(Owner->GetCulledBounds());
+				return cbgui::RecalculateBounds(GetDimension(), GetLocation(), GetRotation(), GetRotatorOrigin()).Crop(Owner->GetCulledBounds());
 			else
 				return cbBounds(GetBounds()).Crop(Owner->GetCulledBounds());
 		}
 		else if (Canvas && bIsAlignedToCanvas)
 		{
 			if (IsRotated())
-				return cbgui::RecalculateBounds(GetDimension(), GetLocation(), GetRotation(), GetOrigin()).Crop(Canvas->GetScreenBounds());
+				return cbgui::RecalculateBounds(GetDimension(), GetLocation(), GetRotation(), GetRotatorOrigin()).Crop(Canvas->GetScreenBounds());
 			else
 				return cbBounds(GetBounds()).Crop(Canvas->GetScreenBounds());
 		}
-		return IsRotated() ? cbgui::RecalculateBounds(GetDimension(), GetLocation(), GetRotation(), GetOrigin()) : GetBounds();
+		return IsRotated() ? cbgui::RecalculateBounds(GetDimension(), GetLocation(), GetRotation(), GetRotatorOrigin()) : GetBounds();
 	}
 
 	cbVector cbWidget::GetOrigin() const
 	{
 		if (Owner)
 			return Owner->GetOrigin();
+		if (HasCanvas())
+		{
+			if (IsAlignedToCanvas())
+				return GetCanvas()->GetCenter();
+		}
+		return GetLocation();
+	}
+
+	cbVector cbgui::cbWidget::GetRotatorOrigin() const
+	{
+		if (Owner)
+		{
+			if (Owner->IsRotated())
+				return Owner->GetRotatorOrigin();
+			return GetLocation();
+		}
 		if (HasCanvas())
 		{
 			if (IsAlignedToCanvas())

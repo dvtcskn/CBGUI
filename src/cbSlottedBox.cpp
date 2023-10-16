@@ -92,6 +92,13 @@ namespace cbgui
 		return cbVector();
 	}
 
+	cbVector cbSlot::GetRotatorOrigin() const
+	{
+		if (IsInserted())
+			return Owner->GetRotatorOrigin();
+		return cbVector();
+	}
+
 	bool cbSlot::IsRotated() const
 	{
 		if (IsInserted())
@@ -269,7 +276,7 @@ namespace cbgui
 			return GetBounds();
 
 		if (GetRotation() != 0.0f)
-			return cbgui::RecalculateBounds(GetDimension(), GetLocation(), GetRotation(), GetOrigin()).Crop(Owner->GetCulledBounds());
+			return cbgui::RecalculateBounds(GetDimension(), GetLocation(), GetRotation(), GetRotatorOrigin()).Crop(Owner->GetCulledBounds());
 		else
 			return cbBounds(GetBounds()).Crop(Owner->GetCulledBounds());
 

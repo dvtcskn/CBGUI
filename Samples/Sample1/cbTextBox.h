@@ -242,10 +242,11 @@ protected:
 		virtual bool HasGeometry() const override final { return true; }
 		virtual std::vector<cbGeometryVertexData> GetVertexData(const bool LineGeometry) const override final
 		{
+			float Rotation = GetRotation();
 			return cbGeometryFactory::GetAlignedVertexData(cbGeometryFactory::Create4DPlaneVerticesFromRect(GetDimension()),
 				cbGeometryFactory::GeneratePlaneTextureCoordinate(),
 				cbColor::Black(),
-				GetLocation(), GetRotation(), GetRotation() != 0.0f ? GetOrigin() : cbVector::Zero());
+				GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 		}
 
 		virtual std::vector<std::uint32_t> GetIndexData(const bool LineGeometry) const override final

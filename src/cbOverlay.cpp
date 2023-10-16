@@ -860,6 +860,7 @@ namespace cbgui
 	{
 		if (LineGeometry)
 		{
+			float Rotation = GetRotation();
 			cbBounds Bounds(GetDimension());
 			std::vector<cbVector4> Data;
 			Data.push_back(cbVector4(Bounds.GetCorner(0), 0.0f, 1.0f));
@@ -875,7 +876,7 @@ namespace cbgui
 
 			return cbGeometryFactory::GetAlignedVertexData(Data, TC,
 				cbColor::White(),
-				GetLocation(), GetRotation(), IsRotated() ? GetOrigin() : cbVector::Zero());
+				GetLocation(), Rotation, Rotation != 0.0f ? GetRotatorOrigin() : cbVector::Zero());
 		}
 		return std::vector<cbGeometryVertexData>();
 	};
